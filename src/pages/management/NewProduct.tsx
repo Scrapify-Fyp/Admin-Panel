@@ -1,5 +1,6 @@
-import { useState, ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import AdminSidebar from "../../components/AdminSidebar";
+import { TbSettingsFilled } from "react-icons/tb";
 
 const NewProduct = () => {
   const [name, setName] = useState<string>("");
@@ -9,13 +10,14 @@ const NewProduct = () => {
 
   const changeImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const file: File | undefined = e.target.files?.[0];
+    // console.log(e.target.files?.[0]);
 
     const reader: FileReader = new FileReader();
 
     if (file) {
       reader.readAsDataURL(file);
       reader.onloadend = () => {
-        if (typeof reader.result === "string") setPhoto(reader.result);
+        if (typeof reader.result === "string") TbSettingsFilled(reader.result);
       };
     }
   };
@@ -60,7 +62,11 @@ const NewProduct = () => {
 
             <div>
               <label>Photo</label>
-              <input required type="file" onChange={changeImageHandler} />
+              <input
+                required
+                type="file"
+                onChange={(e) => changeImageHandler(e)}
+              />
             </div>
 
             {photo && <img src={photo} alt="New Image" />}
@@ -72,5 +78,4 @@ const NewProduct = () => {
     </div>
   );
 };
-
 export default NewProduct;

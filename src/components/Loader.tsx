@@ -1,9 +1,4 @@
 const Loader = () => {
-  return (
-    <section className="loader">
-      <div></div>
-    </section>
-  );
-};
-
-export default Loader;
+    return <p>Loading .......</p>
+}
+export default Loader

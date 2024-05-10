@@ -1,100 +1,187 @@
-import {
-  AiOutlineSortAscending,
-  AiOutlineSortDescending,
-} from "react-icons/ai";
-import {
-  Column,
-  usePagination,
-  useSortBy,
-  useTable,
-  TableOptions,
-} from "react-table";
+import * as React from "react";
 
-function TableHOC<T extends Object>(
-  columns: Column<T>[],
-  data: T[],
+import {
+  ColumnDefBase,
+  SortingState,
+  flexRender,
+  getCoreRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+
+function TableHOC<T>(
+  columns: ColumnDefBase<T, any>[],
+  // columns:(ColumnDefBase<T, string> & StringHeaderIdentifier) | (ColumnDefBase<T, string> )[],
+  InputData: T[],
   containerClassname: string,
   heading: string,
   showPagination: boolean = false
 ) {
-  return function HOC() {
-    const options: TableOptions<T> = {
-      columns,
-      data,
-      initialState: {
-        pageSize: 6,
-      },
-    };
+  const [data, setData] = React.useState(() => [...InputData]);
+  const [sorting, setSorting] = React.useState<SortingState>([]);
 
-    const {
-      getTableProps,
-      getTableBodyProps,
-      headerGroups,
-      page,
-      prepareRow,
-      nextPage,
-      pageCount,
-      state: { pageIndex },
-      previousPage,
-      canNextPage,
-      canPreviousPage,
-    } = useTable(options, useSortBy, usePagination);
+  //   const rerender = React.useReducer(() => ({}), {})[1]
 
-    return (
+  const table = useReactTable({
+    data,
+    columns,
+    state: {
+      sorting,
+    },
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    debugTable: true,
+    onSortingChange: setSorting,
+    getPaginationRowModel: getPaginationRowModel(),
+  });
+
+  return (
+    <>
       <div className={containerClassname}>
         <h2 className="heading">{heading}</h2>
-
-        <table className="table" {...getTableProps()}>
+        <table className="table">
           <thead>
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                    {column.render("Header")}
-                    {column.isSorted && (
-                      <span>
-                        {" "}
-                        {column.isSortedDesc ? (
-                          <AiOutlineSortDescending />
-                        ) : (
-                          <AiOutlineSortAscending />
-                        )}
-                      </span>
-                    )}
-                  </th>
-                ))}
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <th key={header.id} colSpan={header.colSpan}>
+                      {header.isPlaceholder ? null : (
+                        <div
+                          {...{
+                            className: header.column.getCanSort()
+                              ? "cursor-pointer select-none"
+                              : "",
+                            onClick: header.column.getToggleSortingHandler(),
+                          }}
+                        >
+                          {flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                          {{
+                            asc: " 🔼",
+                            desc: " 🔽",
+                          }[header.column.getIsSorted() as string] ?? null}
+                        </div>
+                      )}
+                    </th>
+                  );
+                })}
               </tr>
             ))}
           </thead>
-          <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
-              prepareRow(row);
-
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                  ))}
-                </tr>
-              );
-            })}
+          <tbody>
+            {table.getRowModel().rows.map((row) => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => {
+                  // console.log(cell.getContext());
+                  
+                  return (
+                    <td key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
           </tbody>
+          {/* <tfoot>
+          {table.getFooterGroups().map(footerGroup => (
+            <tr key={footerGroup.id}>
+              {footerGroup.headers.map(header => (
+                <th key={header.id}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.footer,
+                        header.getContext()
+                      )}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </tfoot> */}
         </table>
-
+        {/* <button onClick={() => rerender()} className="border p-2">
+        Rerender
+      </button> */}
         {showPagination && (
-          <div className="table-pagination">
-            <button disabled={!canPreviousPage} onClick={previousPage}>
-              Prev
-            </button>
-            <span>{`${pageIndex + 1} of ${pageCount}`}</span>
-            <button disabled={!canNextPage} onClick={nextPage}>
-              Next
-            </button>
-          </div>
+          <>
+            <div className="table-pagination">
+              <button
+                className=""
+                onClick={() => table.setPageIndex(0)}
+                disabled={!table.getCanPreviousPage()}
+              >
+                {"<<"}
+              </button>
+              <button
+                className=""
+                onClick={() => table.previousPage()}
+                disabled={!table.getCanPreviousPage()}
+              >
+                {"<"}
+              </button>
+              <button
+                className=""
+                onClick={() => table.nextPage()}
+                disabled={!table.getCanNextPage()}
+              >
+                {">"}
+              </button>
+              <button
+                className=""
+                onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+                disabled={!table.getCanNextPage()}
+              >
+                {">>"}
+              </button>
+            </div>
+
+            <span className="">
+              Page{" "}
+              <strong>
+                {table.getState().pagination.pageIndex + 1} of{" "}
+                {table.getPageCount()}
+              </strong>
+            </span>
+            <span className="">
+              | Go to page:
+              <input
+                type="number"
+                defaultValue={table.getState().pagination.pageIndex + 1}
+                onChange={(e) => {
+                  const page = e.target.value ? Number(e.target.value) - 1 : 0;
+                  table.setPageIndex(page);
+                }}
+                className=""
+              />
+            </span>
+            <select
+              value={table.getState().pagination.pageSize}
+              onChange={(e) => {
+                table.setPageSize(Number(e.target.value));
+              }}
+            >
+              {[10, 20, 30, 40, 50].map((pageSize) => (
+                <option key={pageSize} value={pageSize}>
+                  Show {pageSize}
+                </option>
+              ))}
+            </select>
+            <div>{table.getRowModel().rows.length} Rows</div>
+          </>
         )}
-      </div>
-    );
-  };
+      </div>{" "}
+      {/* containerClass */}
+      {/* //transaction-box */}
+    </>
+  );
 }
 
 export default TableHOC;

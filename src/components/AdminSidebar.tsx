@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
 import { IconType } from "react-icons";
+import { Link, Location, useLocation } from "react-router-dom";
+
 import { AiFillFileText } from "react-icons/ai";
 import {
   FaChartBar,
-  FaChartLine,
+  FaChartLine, 
   FaChartPie,
   FaGamepad,
   FaStopwatch,
 } from "react-icons/fa";
+
 import { HiMenuAlt4 } from "react-icons/hi";
 import { IoIosPeople } from "react-icons/io";
 import {
@@ -15,173 +17,131 @@ import {
   RiDashboardFill,
   RiShoppingBag3Fill,
 } from "react-icons/ri";
-import { Link, Location, useLocation } from "react-router-dom";
 
 const AdminSidebar = () => {
+
+  //linksText
+  const dashboardlinksText = [
+    "Dashboard",
+    "Product",
+    "Customer",
+    "Transaction",
+  ];
+  const chartslinksText = ["Bar", "Pie", "Line"];
+  const appslinksText = ["Stopwatch", "Coupon", "Toss"];
+
+  //links icons
+  const dashboardIcons = [
+    RiDashboardFill,
+    RiShoppingBag3Fill,
+    IoIosPeople,
+    AiFillFileText,
+  ];
+  const chartsIcons = [FaChartBar, FaChartPie, FaChartLine];
+  const appsIcons = [FaStopwatch, RiCoupon3Fill, FaGamepad];
+
+  //links URLs
+  const dashboardlinksUrl = [
+    "/admin/dashboard",
+    "/admin/product",
+    "/admin/customer",
+    "/admin/transaction",
+  ];
+  const appslinksUrl = [
+    "/admin/chart/bar",
+    "/admin/chart/pie",
+    "/admin/chart/line",
+  ];
+  const chartslinksUrl = [
+    "/admin/app/stopwatch",
+    "/admin/app/coupon",
+    "/admin/app/toss",
+  ];
+
   const location = useLocation();
 
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const [phoneActive, setPhoneActive] = useState<boolean>(
-    window.innerWidth < 1100
-  );
-
-  const resizeHandler = () => {
-    setPhoneActive(window.innerWidth < 1100);
-  };
-
-  useEffect(() => {
-    window.addEventListener("resize", resizeHandler);
-
-    return () => {
-      window.removeEventListener("resize", resizeHandler);
-    };
-  }, []);
+  // console.log(location);
 
   return (
-    <>
-      {phoneActive && (
-        <button id="hamburger" onClick={() => setShowModal(true)}>
-          <HiMenuAlt4 />
-        </button>
-      )}
+    <aside>
+      <h2 style={{ color: '#ffffff' }}>Scrapify</h2>
+      <Div
+        divTitle={"Dashboard"}
+        location={location}
+        text={dashboardlinksText}
+        url={dashboardlinksUrl}
+        Icon={dashboardIcons}
+      />
 
-      <aside
-        style={
-          phoneActive
-            ? {
-                width: "20rem",
-                height: "100vh",
-                position: "fixed",
-                top: 0,
-                left: showModal ? "0" : "-20rem",
-                transition: "all 0.5s",
-              }
-            : {}
-        }
-      >
-        <h2>Logo.</h2>
-        <DivOne location={location} />
-        <DivTwo location={location} />
-        <DivThree location={location} />
+      <Div
+        divTitle={"Apps"}
+        location={location}
+        text={appslinksText}
+        url={appslinksUrl}
+        Icon={appsIcons}
+      />
 
-        {phoneActive && (
-          <button id="close-sidebar" onClick={() => setShowModal(false)}>
-            Close
-          </button>
-        )}
-      </aside>
-    </>
+      <Div
+        divTitle={"Charts"}
+        location={location}
+        text={chartslinksText}
+        url={chartslinksUrl}
+        Icon={chartsIcons}
+      />
+    </aside>
   );
 };
 
-const DivOne = ({ location }: { location: Location }) => (
-  <div>
-    <h5>Dashboard</h5>
-    <ul>
-      <Li
-        url="/admin/dashboard"
-        text="Dashboard"
-        Icon={RiDashboardFill}
-        location={location}
-      />
-      <Li
-        url="/admin/product"
-        text="Product"
-        Icon={RiShoppingBag3Fill}
-        location={location}
-      />
-      <Li
-        url="/admin/customer"
-        text="Customer"
-        Icon={IoIosPeople}
-        location={location}
-      />
-      <Li
-        url="/admin/transaction"
-        text="Transaction"
-        Icon={AiFillFileText}
-        location={location}
-      />
-    </ul>
-  </div>
-);
+interface divContent {
+  divTitle: string;
+  location: Location;
+  text: string[];
+  url: string[];
+  Icon: IconType[];
+}
 
-const DivTwo = ({ location }: { location: Location }) => (
-  <div>
-    <h5>Charts</h5>
-    <ul>
-      <Li
-        url="/admin/chart/bar"
-        text="Bar"
-        Icon={FaChartBar}
-        location={location}
-      />
-      <Li
-        url="/admin/chart/pie"
-        text="Pie"
-        Icon={FaChartPie}
-        location={location}
-      />
-      <Li
-        url="/admin/chart/line"
-        text="Line"
-        Icon={FaChartLine}
-        location={location}
-      />
-    </ul>
-  </div>
-);
+const Div = ({ divTitle, location, text, url, Icon }: divContent) => {
 
-const DivThree = ({ location }: { location: Location }) => (
-  <div>
-    <h5>Apps</h5>
-    <ul>
-      <Li
-        url="/admin/app/stopwatch"
-        text="Stopwatch"
-        Icon={FaStopwatch}
-        location={location}
-      />
-      <Li
-        url="/admin/app/coupon"
-        text="Coupon"
-        Icon={RiCoupon3Fill}
-        location={location}
-      />
-      <Li
-        url="/admin/app/toss"
-        text="Toss"
-        Icon={FaGamepad}
-        location={location}
-      />
-    </ul>
-  </div>
-);
+  return (
+    <div>
+      <h5>{divTitle}</h5>
+      <ul>
+        {text.map((element, index) => {
+          return (
+            <Li
+              text={element}
+              url={url[index]}
+              Icon={Icon[index]}
+              location={location}
+              key={element}
+            />
+          );
+        })}
+      </ul>
+    </div>
+  );
+};
 
 interface LiProps {
-  url: string;
   text: string;
-  location: Location;
+  url: string;
   Icon: IconType;
+  location: Location;
 }
-const Li = ({ url, text, location, Icon }: LiProps) => (
-  <li
-    style={{
-      backgroundColor: location.pathname.includes(url)
-        ? "rgba(0,115,255,0.1)"
-        : "white",
-    }}
-  >
-    <Link
-      to={url}
+const Li = ({ text, url, Icon, location }: LiProps) => {
+  return (
+    <li
       style={{
-        color: location.pathname.includes(url) ? "rgb(0,115,255)" : "black",
+        backgroundColor: location.pathname.includes(url)
+          ? "#c7a36f"
+          : "#FFF",
       }}
     >
-      <Icon />
-      {text}
-    </Link>
-  </li>
-);
+      <Link to={url}>
+        <Icon /> {text}
+      </Link>
+    </li>
+  );
+};
 
 export default AdminSidebar;

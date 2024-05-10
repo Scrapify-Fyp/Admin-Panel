@@ -1,5 +1,5 @@
 {
-  "name": "admin-dashboard",
+  "name": "ecommerce-admin-dashboard-mern",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,26 +10,27 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "chart.js": "^4.4.0",
+    "@tanstack/react-table": "^8.11.6",
+    "chart.js": "^4.4.1",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
-    "react-icons": "^4.10.1",
-    "react-router-dom": "^6.15.0",
+    "react-icons": "^5.0.0",
+    "react-router-dom": "^6.21.1",
     "react-table": "^7.8.0",
-    "sass": "^1.66.1"
+    "sass": "^1.69.7"
   },
   "devDependencies": {
-    "@types/react": "^18.2.15",
-    "@types/react-dom": "^18.2.7",
-    "@types/react-table": "^7.7.15",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
-    "@vitejs/plugin-react-swc": "^3.3.2",
-    "eslint": "^8.45.0",
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@types/react-table": "^7.7.19",
+    "@typescript-eslint/eslint-plugin": "^6.14.0",
+    "@typescript-eslint/parser": "^6.14.0",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "eslint": "^8.55.0",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.3",
-    "typescript": "^5.0.2",
-    "vite": "^4.4.5"
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.8"
   }
 }

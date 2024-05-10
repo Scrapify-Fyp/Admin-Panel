@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import AdminSidebar from "../../components/AdminSidebar";
 
 const img =
@@ -28,13 +28,14 @@ const ProductManagement = () => {
     }
   };
 
-  const submitHandler = (e: FormEvent<HTMLFormElement>) => {
+  const submitHandler = (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setName(nameUpdate);
     setPrice(priceUpdate);
     setStock(stockUpdate);
     setPhoto(photoUpdate);
-  };
+  }
+
   return (
     <div className="admin-container">
       <AdminSidebar />
@@ -52,7 +53,7 @@ const ProductManagement = () => {
         </section>
 
         <article>
-          <form onSubmit={submitHandler}>
+          <form onSubmit={(e)=>submitHandler(e)}>
             <h2>Manage</h2>
             <div>
               <label>Name</label>
@@ -99,5 +100,4 @@ const ProductManagement = () => {
     </div>
   );
 };
-
 export default ProductManagement;

@@ -1,17 +1,19 @@
-import { FaRegBell } from "react-icons/fa";
 import AdminSidebar from "../components/AdminSidebar";
 import { BsSearch } from "react-icons/bs";
-import userImg from "../assets/userpic.png";
+import { FaRegBell } from "react-icons/fa";
 import { HiTrendingUp, HiTrendingDown } from "react-icons/hi";
+import userImg from "../assets/userpic.png";
 import data from "../assets/data.json";
 import { BarChart, DoughnutChart } from "../components/Charts";
 import { BiMaleFemale } from "react-icons/bi";
-import Table from "../components/DashboardTable";
+import { defaultData } from "../assets/rootData";
+import DashboardTable from "../components/DashboardTable";
 
-const dashboard = () => {
+
+function Dashboard() {
   return (
     <div className="admin-container">
-      <AdminSidebar />
+      <AdminSidebar /> 
       <main className="dashboard">
         <div className="bar">
           <BsSearch />
@@ -19,6 +21,7 @@ const dashboard = () => {
           <FaRegBell />
           <img src={userImg} alt="User" />
         </div>
+        {/* bar */}
 
         <section className="widget-container">
           <WidgetItem
@@ -47,12 +50,14 @@ const dashboard = () => {
             color="rgb(76 0 255)"
           />
         </section>
+        {/* widget-container */}
 
         <section className="graph-container">
           <div className="revenue-chart">
             <h2>Revenue & Transaction</h2>
             {/* Grapph here */}
             <BarChart
+              // horizontal={true}
               data_2={[300, 144, 433, 655, 237, 755, 190]}
               data_1={[200, 444, 343, 556, 778, 455, 990]}
               title_1="Revenue"
@@ -63,7 +68,7 @@ const dashboard = () => {
           </div>
 
           <div className="dashboard-categories">
-            <h2>Inventory</h2>
+            <h2>View All</h2>
             <div>
               {data.categories.map((i) => (
                 <CategoryItem
@@ -76,6 +81,7 @@ const dashboard = () => {
             </div>
           </div>
         </section>
+        {/* graph-container */}
 
         <section className="transaction-container">
           <div className="gender-chart">
@@ -93,12 +99,20 @@ const dashboard = () => {
             </p>
           </div>
 
-          <Table data={data.transaction} />
+          {/* <Table data={data.transaction} /> */}
+          {/* <TableHOC data={defaultData} columns={columns} classNameProp="transaction-box" heading="Transaction Details" dataType={DataType} /> */}
+
+
+          {/* <TablePaginated /> */}
+
+          <DashboardTable InputData={defaultData} />
         </section>
+        {/* transaction-container */}
+        
       </main>
     </div>
   );
-};
+}
 
 interface WidgetItemProps {
   heading: string;
@@ -129,6 +143,7 @@ const WidgetItem = ({
         </span>
       )}
     </div>
+    {/* widget-info */}
 
     <div
       className="widget-circle"
@@ -147,7 +162,9 @@ const WidgetItem = ({
         {percent}%
       </span>
     </div>
+    {/* widget-circle */}
   </article>
+  // widget
 );
 
 interface CategoryItemProps {
@@ -171,4 +188,4 @@ const CategoryItem = ({ color, value, heading }: CategoryItemProps) => (
   </div>
 );
 
-export default dashboard;
+export default Dashboard;
