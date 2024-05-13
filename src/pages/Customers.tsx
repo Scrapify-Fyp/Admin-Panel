@@ -30,11 +30,6 @@ const columnHelper = createColumnHelper<DataType>();
       cell: (info) => info.renderValue(),
       footer: (info) => info.column.id,
     }),
-    columnHelper.accessor("gender", {
-      header: () => <span>Gender</span>,
-      cell: (info) => info.renderValue(),
-      footer: (info) => info.column.id,
-    }),
     columnHelper.accessor("role", {
       header: () => 'Role',
       cell: (info) => info.getValue(),
@@ -73,6 +68,614 @@ const img2 = "https://randomuser.me/api/portraits/women/50.jpg";
     },
   
     {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
+      avatar: (
+        <img
+          style={{
+            borderRadius: "50%",
+          }}
+          src={img2}
+          alt="Shoes"
+        />
+      ),
+      name: "Javeria Alam",
+      email: "javeriaalam21@gmail.com",
+      gender: "female",
+      role: "user",
+      action: (
+        <button>
+          <FaTrash />
+        </button>
+      ),
+    }, {
       avatar: (
         <img
           style={{

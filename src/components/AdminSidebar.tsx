@@ -73,21 +73,6 @@ const AdminSidebar = () => {
         Icon={dashboardIcons}
       />
 
-      <Div
-        divTitle={"Apps"}
-        location={location}
-        text={appslinksText}
-        url={appslinksUrl}
-        Icon={appsIcons}
-      />
-
-      <Div
-        divTitle={"Charts"}
-        location={location}
-        text={chartslinksText}
-        url={chartslinksUrl}
-        Icon={chartsIcons}
-      />
     </aside>
   );
 };

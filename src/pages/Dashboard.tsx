@@ -75,7 +75,7 @@ function Dashboard() {
                   key={i.heading}
                   heading={i.heading}
                   value={i.value}
-                  color={`hsl(${i.value * 4},${i.value}%,50%)`}
+                  // color={`hsl(${i.value * 4},${i.value}%,50%)`}
                 />
               ))}
             </div>
@@ -84,20 +84,7 @@ function Dashboard() {
         {/* graph-container */}
 
         <section className="transaction-container">
-          <div className="gender-chart">
-            <h2>Gender Ratio</h2>
-
-            <DoughnutChart
-              labels={["Female", "Male"]}
-              data={[12, 19]}
-              backgroundColor={["hsl(340,82%,56%)", "rgba(53,162,235,0.8)"]}
-              cutout={90}
-            />
-
-            <p>
-              <BiMaleFemale />
-            </p>
-          </div>
+         
 
           {/* <Table data={data.transaction} /> */}
           {/* <TableHOC data={defaultData} columns={columns} classNameProp="transaction-box" heading="Transaction Details" dataType={DataType} /> */}
@@ -176,15 +163,8 @@ interface CategoryItemProps {
 const CategoryItem = ({ color, value, heading }: CategoryItemProps) => (
   <div className="category-item">
     <h5>{heading}</h5>
-    <div>
-      <div
-        style={{
-          backgroundColor: color,
-          width: `${value}%`,
-        }}
-      ></div>
-    </div>
-    <span>{value}%</span>
+   
+    <strong>{value}</strong>
   </div>
 );
 

@@ -2,20 +2,16 @@
     "categories": [
       {
         "value": 40,
-        "heading": "Laptops"
+        "heading": "Users"
       },
   
       {
         "value": 100,
-        "heading": "Shoes"
+        "heading": "Products"
       },
       {
         "value": 80,
-        "heading": "Cameras"
-      },
-      {
-        "value": 60,
-        "heading": "Jeans"
+        "heading": "Orders"
       }
     ],
   

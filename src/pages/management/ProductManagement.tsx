@@ -28,13 +28,13 @@ const ProductManagement = () => {
     }
   };
 
-  const submitHandler = (e:FormEvent<HTMLFormElement>) => {
+  const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setName(nameUpdate);
     setPrice(priceUpdate);
     setStock(stockUpdate);
     setPhoto(photoUpdate);
-  }
+  };
 
   return (
     <div className="admin-container">
@@ -53,8 +53,31 @@ const ProductManagement = () => {
         </section>
 
         <article>
-          <form onSubmit={(e)=>submitHandler(e)}>
-            <h2>Manage</h2>
+          <form onSubmit={(e) => submitHandler(e)}>
+            <div className="manage-header">
+              <div style={{display:"flex",justifyContent: "space-between"}}>
+              <h2>Manage</h2>
+              <button className="close-button" onClick={() => console.log("Close button clicked")}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="icon icon-tabler icon-tabler-x"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+              </div>
+              
+            </div>
             <div>
               <label>Name</label>
               <input
