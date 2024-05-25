@@ -4,6 +4,7 @@ import Loader from "./components/Loader";
 import NewProduct from "./pages/management/NewProduct";
 import ProductManagement from "./pages/management/ProductManagement";
 import TransactionManagement from "./pages/management/TransactionManagement";
+import LoginPage from "./pages/Login";
 
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Products = lazy(() => import("./pages/Products"));
@@ -29,6 +30,8 @@ function App() {
             path="/admin/transaction/:id"
             element={<TransactionManagement />}
           />
+          <Route path="/admin/Login" element={<LoginPage/> } />
+
         </Routes>
       </Suspense>
     </Router>

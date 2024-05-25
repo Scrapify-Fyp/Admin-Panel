@@ -4,16 +4,14 @@ import { FaRegBell } from "react-icons/fa";
 import { HiTrendingUp, HiTrendingDown } from "react-icons/hi";
 import userImg from "../assets/userpic.png";
 import data from "../assets/data.json";
-import { BarChart, DoughnutChart } from "../components/Charts";
-import { BiMaleFemale } from "react-icons/bi";
+import { BarChart } from "../components/Charts";
 import { defaultData } from "../assets/rootData";
 import DashboardTable from "../components/DashboardTable";
-
 
 function Dashboard() {
   return (
     <div className="admin-container">
-      <AdminSidebar /> 
+      <AdminSidebar />
       <main className="dashboard">
         <div className="bar">
           <BsSearch />
@@ -55,7 +53,7 @@ function Dashboard() {
         <section className="graph-container">
           <div className="revenue-chart">
             <h2>Revenue & Transaction</h2>
-            {/* Grapph here */}
+            {/* Graph here */}
             <BarChart
               // horizontal={true}
               data_2={[300, 144, 433, 655, 237, 755, 190]}
@@ -75,7 +73,7 @@ function Dashboard() {
                   key={i.heading}
                   heading={i.heading}
                   value={i.value}
-                  // color={`hsl(${i.value * 4},${i.value}%,50%)`}
+                  color={`hsl(${i.value * 4},${i.value}%,50%)`} // Pass the color prop
                 />
               ))}
             </div>
@@ -84,18 +82,9 @@ function Dashboard() {
         {/* graph-container */}
 
         <section className="transaction-container">
-         
-
-          {/* <Table data={data.transaction} /> */}
-          {/* <TableHOC data={defaultData} columns={columns} classNameProp="transaction-box" heading="Transaction Details" dataType={DataType} /> */}
-
-
-          {/* <TablePaginated /> */}
-
           <DashboardTable InputData={defaultData} />
         </section>
         {/* transaction-container */}
-        
       </main>
     </div>
   );
@@ -163,8 +152,7 @@ interface CategoryItemProps {
 const CategoryItem = ({ color, value, heading }: CategoryItemProps) => (
   <div className="category-item">
     <h5>{heading}</h5>
-   
-    <strong>{value}</strong>
+    <strong style={{ color }}>{value}</strong>
   </div>
 );
 
