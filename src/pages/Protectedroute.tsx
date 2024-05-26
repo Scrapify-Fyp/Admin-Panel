@@ -1,21 +1,22 @@
-// import React from 'react';
-// import { Route, Navigate } from 'react-router-dom';
-// import { useSelector } from 'react-redux';
-// import { RootState } from './Redux/store';
+import React, { ReactNode } from "react";
+import { Navigate } from "react-router-dom";
+import { auth } from "./auth";
 
-// interface ProtectedRouteProps {
-//   element: React.ReactNode;
-//   path: string;
-// }
+interface ProtectedRouteProps {
+  children: ReactNode;
+}
 
-// const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element, path }) => {
-//   const auth = useSelector((state: RootState) => state.auth);
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+  const user = auth();
+//   const navigate = useNavigate();
+console.log("i a user",user);
 
-//   return auth.isLoggedIn ? (
-//     <Route path={path} element={element} />
-//   ) : (
-//     <Navigate to="/admin/login" replace />
-//   );
-// };
+  if (!user) {
+    
+    return <Navigate to="/" replace />;
+  } else {
+    return <>{children}</>;
+  }
+};
 
-// export default ProtectedRoute;
+export default ProtectedRoute;

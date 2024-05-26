@@ -1,5 +1,4 @@
-import React from "react";
-// import "./Dashboard.css"
+import "./Dashboard.css"
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import AdminSidebar from "../components/AdminSidebar";
@@ -20,7 +19,7 @@ function Dashboard() {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/admin/Login");
+    navigate("/");
   };
 
   return (
@@ -33,7 +32,7 @@ function Dashboard() {
           <FaRegBell />
           <div className="user-dropdown">
             <p className="user-button">
-              {user?.username} {/* Display username */}
+                  {user?.username} {/* Display username */}
             </p>
             <div className="user-dropdown-content">
               <button onClick={handleLogout}>Logout</button>
