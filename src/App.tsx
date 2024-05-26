@@ -1,5 +1,6 @@
 import { Suspense, lazy } from 'react';
 import { useEffect } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // import { useSelector } from 'react-redux';
 // import { RootState } from './pages/Redux/store';
@@ -35,45 +36,46 @@ function App() {
 
     return () => {};
   }, []);
-  
+
   return (
     <Router>
       <Suspense fallback={<div>Loading...</div>}>
-        <Routes>       
-            <Route path="/" element={<LoginPage />} />     
-            <Route path="/admin/dashboard" element={
-             <Protectedroute>
-                 <Dashboard />
-             </Protectedroute>
-            } />
-            <Route path="/admin/product" element={
-             <Protectedroute>
-                   <Products />
-            </Protectedroute>} />
-            <Route path="/admin/customer" element={
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/admin/dashboard" element={
             <Protectedroute>
-            <Customers />
-            </Protectedroute>} />
-            <Route path="/admin/transaction" element={
+              <Dashboard />
+            </Protectedroute>
+          } />
+          <Route path="/admin/product" element={
             <Protectedroute>
-            <Transaction />
+              <Products />
             </Protectedroute>} />
-            <Route path="/admin/product/new" element={
-              <Protectedroute>
-                  <NewProduct />
-              </Protectedroute>
-            } />
-            <Route path="/admin/product/:id" element={
-                <Protectedroute>
-                    <ProductManagement />
-                </Protectedroute>
-            } 
-            />
-            <Route path="/admin/transaction/:id" element={
-                <Protectedroute>
-                    <TransactionManagement />
-                </Protectedroute>
-            } />      
+          <Route path="/admin/customer" element={
+            <Protectedroute>
+              <Customers />
+            </Protectedroute>} />
+          <Route path="/admin/transaction" element={
+            <Protectedroute>
+              <Transaction />
+            </Protectedroute>
+          } />
+          <Route path="/admin/product/new" element={
+            <Protectedroute>
+              <NewProduct />
+            </Protectedroute>
+          } />
+          <Route path="/admin/product/:id" element={
+            <Protectedroute>
+              <ProductManagement />
+            </Protectedroute>
+          }
+          />
+          <Route path="/admin/transaction/:id" element={
+            <Protectedroute>
+              <TransactionManagement />
+            </Protectedroute>
+          } />
         </Routes>
       </Suspense>
     </Router>

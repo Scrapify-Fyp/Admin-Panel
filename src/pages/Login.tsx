@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios"; // Import Axios
 import { useNavigate } from "react-router-dom";
 import { connect } from 'react-redux';
+import { Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { loginSuccess, loginFailure } from "./Redux/actions/authaction";
 
@@ -11,9 +12,12 @@ function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
+    setTimeout(async () => {
     try {
       const response = await axios.post(
         "http://localhost:3002/Adminlogin",
@@ -42,6 +46,10 @@ function LoginPage() {
         setError("An error occurred. Please try again.");
       }
     }
+    finally {
+      setIsLoading(false);
+    }
+  }, 500);
   };
 
   return (
@@ -99,6 +107,7 @@ function LoginPage() {
           </div>
           <button
             type="submit"
+            disabled={isLoading}
             style={{
               width: "100%",
               padding: "10px",
@@ -110,7 +119,18 @@ function LoginPage() {
               cursor: "pointer",
             }}
           >
-            Login
+            {isLoading ? (
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+                className="me-2"
+              />
+            ) : (
+              "Log In"
+            )}
           </button>
         </form>
         {error && (
