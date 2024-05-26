@@ -2,18 +2,17 @@ import { IconType } from "react-icons";
 import { Link, Location, useLocation } from "react-router-dom";
 
 import { AiFillFileText } from "react-icons/ai";
-import {
-  FaChartBar,
-  FaChartLine, 
-  FaChartPie,
-  FaGamepad,
-  FaStopwatch,
-} from "react-icons/fa";
+// import {
+//   FaChartBar,
+//   FaChartLine, 
+//   FaChartPie,
+//   FaGamepad,
+//   FaStopwatch,
+// } from "react-icons/fa";
 
-import { HiMenuAlt4 } from "react-icons/hi";
+// import { HiMenuAlt4 } from "react-icons/hi";
 import { IoIosPeople } from "react-icons/io";
 import {
-  RiCoupon3Fill,
   RiDashboardFill,
   RiShoppingBag3Fill,
 } from "react-icons/ri";
@@ -27,8 +26,8 @@ const AdminSidebar = () => {
     "Customer",
     "Transaction",
   ];
-  const chartslinksText = ["Bar", "Pie", "Line"];
-  const appslinksText = ["Stopwatch", "Coupon", "Toss"];
+  // const chartslinksText = ["Bar", "Pie", "Line"];
+  // const appslinksText = ["Stopwatch", "Coupon", "Toss"];
 
   //links icons
   const dashboardIcons = [
@@ -37,8 +36,8 @@ const AdminSidebar = () => {
     IoIosPeople,
     AiFillFileText,
   ];
-  const chartsIcons = [FaChartBar, FaChartPie, FaChartLine];
-  const appsIcons = [FaStopwatch, RiCoupon3Fill, FaGamepad];
+  // const chartsIcons = [FaChartBar, FaChartPie, FaChartLine];
+  // const appsIcons = [FaStopwatch, RiCoupon3Fill, FaGamepad];
 
   //links URLs
   const dashboardlinksUrl = [
@@ -47,16 +46,16 @@ const AdminSidebar = () => {
     "/admin/customer",
     "/admin/transaction",
   ];
-  const appslinksUrl = [
-    "/admin/chart/bar",
-    "/admin/chart/pie",
-    "/admin/chart/line",
-  ];
-  const chartslinksUrl = [
-    "/admin/app/stopwatch",
-    "/admin/app/coupon",
-    "/admin/app/toss",
-  ];
+  // const appslinksUrl = [
+  //   "/admin/chart/bar",
+  //   "/admin/chart/pie",
+  //   "/admin/chart/line",
+  // ];
+  // const chartslinksUrl = [
+  //   "/admin/app/stopwatch",
+  //   "/admin/app/coupon",
+  //   "/admin/app/toss",
+  // ];
 
   const location = useLocation();
 

@@ -1,6 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios"; // Import Axios
+import { useNavigate } from "react-router-dom";
+import { connect } from 'react-redux';
+import { useDispatch } from "react-redux";
+import { loginSuccess, loginFailure } from "./Redux/actions/authaction";
 
 function LoginPage() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:3002/Adminlogin",
+        {
+          username,
+          password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.data.success !== undefined && response.data.success === false) {
+        dispatch(loginFailure(response.data.msg));
+        setError(response.data.msg);
+    } else {
+        dispatch(loginSuccess(response.data.user));
+        navigate('/admin/dashboard');
+    }
+    } catch (err:any) {
+      console.error("Login error:", err);
+      if (err.response && err.response.status === 400) {
+        setError(err.response.data.msg);        
+      } else {
+        setError("An error occurred. Please try again.");
+      }
+    }
+  };
+
   return (
     <div
       style={{
@@ -23,11 +66,13 @@ function LoginPage() {
         }}
       >
         <h2 style={{ marginBottom: "20px", color: "#333" }}>Admin Login</h2>
-        <form>
+        <form onSubmit={handleLogin}>
           <div style={{ marginBottom: "15px" }}>
             <input
               type="text"
               placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               style={{
                 width: "100%",
                 padding: "10px",
@@ -41,6 +86,8 @@ function LoginPage() {
             <input
               type="password"
               placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               style={{
                 width: "100%",
                 padding: "10px",
@@ -66,12 +113,140 @@ function LoginPage() {
             Login
           </button>
         </form>
+        {error && (
+          <p style={{ color: "red", marginTop: "20px" }}>{error}</p>
+        )}
         <p style={{ marginTop: "20px", fontSize: "14px", color: "#888" }}>
-          Forgot your password? <a href="#" style={{ color: "#0073ff" }}>Click here</a>
+          Forgot your password?{" "}
+          <a href="#" style={{ color: "#0073ff" }}>
+            Click here
+          </a>
         </p>
       </div>
     </div>
   );
 }
 
-export default LoginPage;
+export default connect(null, { loginSuccess, loginFailure })(LoginPage);
+// import React, { useState } from "react";
+// import axios from "axios";
+// import { useNavigate } from "react-router-dom";
+// import { useDispatch } from "react-redux";
+// import { loginSuccess, loginFailure } from "./Redux/actions/authaction";
+
+// function LoginPage() {
+//   const navigate = useNavigate();
+//   const dispatch = useDispatch();
+//   const [username, setUsername] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [error, setError] = useState("");
+
+//   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+//     e.preventDefault();
+//     try {
+//       const response = await axios.post(
+//         "http://localhost:3002/Adminlogin",
+//         { username, password },
+//         { headers: { "Content-Type": "application/json" } }
+//       );
+   
+
+// if (response.data.success !== undefined && response.data.success === false) {
+//         dispatch(loginSuccess(response.data.user));
+//         navigate('/admin/dashboard');
+//       } else {
+//         setError(response.data.msg);
+//         dispatch(loginFailure(response.data.msg));
+//       }
+//     } catch (err: any) {
+//       console.error("Login error:", err);
+//       if (err.response && err.response.status === 400) {
+//         setError(err.response.data.msg);
+//       } else {
+//         setError("An error occurred. Please try again.");
+//       }
+//     }
+//   };
+
+//   return (
+//     <div
+//       style={{
+//         display: "flex",
+//         justifyContent: "center",
+//         alignItems: "center",
+//         height: "100vh",
+//         backgroundColor: "#f0f2f5",
+//         fontFamily: "Arial, sans-serif",
+//       }}
+//     >
+//       <div
+//         style={{
+//           backgroundColor: "#fff",
+//           padding: "40px",
+//           borderRadius: "10px",
+//           boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+//           width: "300px",
+//           textAlign: "center",
+//         }}
+//       >
+//         <h2 style={{ marginBottom: "20px", color: "#333" }}>Admin Login</h2>
+//         <form onSubmit={handleLogin}>
+//           <div style={{ marginBottom: "15px" }}>
+//             <input
+//               type="text"
+//               placeholder="Username"
+//               value={username}
+//               onChange={(e) => setUsername(e.target.value)}
+//               style={{
+//                 width: "100%",
+//                 padding: "10px",
+//                 borderRadius: "5px",
+//                 border: "1px solid #ccc",
+//                 fontSize: "14px",
+//               }}
+//             />
+//           </div>
+//           <div style={{ marginBottom: "20px" }}>
+//             <input
+//               type="password"
+//               placeholder="Password"
+//               value={password}
+//               onChange={(e) => setPassword(e.target.value)}
+//               style={{
+//                 width: "100%",
+//                 padding: "10px",
+//                 borderRadius: "5px",
+//                 border: "1px solid #ccc",
+//                 fontSize: "14px",
+//               }}
+//             />
+//           </div>
+//           <button
+//             type="submit"
+//             style={{
+//               width: "100%",
+//               padding: "10px",
+//               borderRadius: "5px",
+//               border: "none",
+//               backgroundColor: "#0073ff",
+//               color: "#fff",
+//               fontSize: "16px",
+//               cursor: "pointer",
+//             }}
+//           >
+//             Login
+//           </button>
+//         </form>
+//         {error && <p style={{ color: "red", marginTop: "20px" }}>{error}</p>}
+//         <p style={{ marginTop: "20px", fontSize: "14px", color: "#888" }}>
+//           Forgot your password?{" "}
+//           <a href="#" style={{ color: "#0073ff" }}>
+//             Click here
+//           </a>
+//         </p>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default LoginPage;

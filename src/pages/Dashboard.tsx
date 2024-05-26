@@ -1,14 +1,28 @@
+import React from "react";
+// import "./Dashboard.css"
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import AdminSidebar from "../components/AdminSidebar";
 import { BsSearch } from "react-icons/bs";
 import { FaRegBell } from "react-icons/fa";
 import { HiTrendingUp, HiTrendingDown } from "react-icons/hi";
-import userImg from "../assets/userpic.png";
 import data from "../assets/data.json";
 import { BarChart } from "../components/Charts";
 import { defaultData } from "../assets/rootData";
 import DashboardTable from "../components/DashboardTable";
+import { RootState } from "./Redux/store"; // Assuming you have this type for the root state
+import { logout } from "./Redux/actions/authaction"; // Action to logout
 
 function Dashboard() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.auth.user); // Access user from Redux
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/admin/Login");
+  };
+
   return (
     <div className="admin-container">
       <AdminSidebar />
@@ -17,8 +31,16 @@ function Dashboard() {
           <BsSearch />
           <input type="text" placeholder="Search for data, users, docs" />
           <FaRegBell />
-          <img src={userImg} alt="User" />
+          <div className="user-dropdown">
+            <p className="user-button">
+              {user?.username} {/* Display username */}
+            </p>
+            <div className="user-dropdown-content">
+              <button onClick={handleLogout}>Logout</button>
+            </div>
+          </div>
         </div>
+
         {/* bar */}
 
         <section className="widget-container">
