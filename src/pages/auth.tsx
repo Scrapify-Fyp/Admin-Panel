@@ -63,13 +63,19 @@
 // };
 
 // // export default auth;
-    import { useSelector} from "react-redux";
-    import { RootState } from "./Redux/store";
+// src/pages/auth.tsx
 
-        export const auth = () => {
-            const user = useSelector((state: RootState) => state.auth.user);
-            console.log("aaaaaaaaaaa",user);
-            
-        return user;
-        }
+// src/pages/auth.tsx
+
+import { useSelector } from 'react-redux';
+import { RootState } from './Redux/store';
+
+export const useAuth = () => {
+  const user = useSelector((state: RootState) => state.user.user);
+  console.log("hehehehhe....",user);
+  
+  return user;
+};
+
+
 

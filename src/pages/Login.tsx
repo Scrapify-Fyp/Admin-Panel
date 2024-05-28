@@ -36,6 +36,8 @@ function LoginPage() {
         setError(response.data.msg);
     } else {
         dispatch(loginSuccess(response.data.user));
+        // console.log("hahahah...");
+        
         navigate('/admin/dashboard');
     }
     } catch (err:any) {

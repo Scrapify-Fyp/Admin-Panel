@@ -1,15 +1,15 @@
 import React, { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
-import { auth } from "./auth";
+import { useAuth } from "./auth";
 
 interface ProtectedRouteProps {
   children: ReactNode;
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const user = auth();
+  const user = useAuth();
 //   const navigate = useNavigate();
-console.log("i a user",user);
+// console.log("i a user",user);
 
   if (!user) {
     

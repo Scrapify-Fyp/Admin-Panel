@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // import { useSelector } from 'react-redux';
 // import { RootState } from './pages/Redux/store';
 // import { selectUser } from './pages/Redux/authSlice'; // Import selectUser from your authSlice
-import { auth } from "./pages/auth"
+import { useAuth } from "./pages/auth"
 import LoginPage from './pages/Login';
 import { useDispatch } from "react-redux";
 import { setUser } from "./pages/Redux/User/userslice";
@@ -25,7 +25,7 @@ function App() {
   useEffect(() => {
     const fetchUser = () => {
       try {
-        const user = auth();
+        const user = useAuth();
         dispatch(setUser(user));
       } catch (error) {
         console.error("Error fetching user:", error);

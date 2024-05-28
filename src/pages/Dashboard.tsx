@@ -1,5 +1,6 @@
-import "./Dashboard.css"
-import { useSelector, useDispatch } from "react-redux";
+import { useState } from 'react';
+import "./Dashboard.css";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import AdminSidebar from "../components/AdminSidebar";
 import { BsSearch } from "react-icons/bs";
@@ -9,17 +10,22 @@ import data from "../assets/data.json";
 import { BarChart } from "../components/Charts";
 import { defaultData } from "../assets/rootData";
 import DashboardTable from "../components/DashboardTable";
-import { RootState } from "./Redux/store"; // Assuming you have this type for the root state
+import { useAuth } from './auth';  
 import { logout } from "./Redux/actions/authaction"; // Action to logout
 
 function Dashboard() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.auth.user); // Access user from Redux
+   const dispatch = useDispatch();
+  const user = useAuth(); // Access user from Redux
+  const [dropdownOpen, setDropdownOpen] = useState(false); // State to manage dropdown visibility
 
   const handleLogout = () => {
     dispatch(logout());
     navigate("/");
+  };
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen); // Toggle dropdown visibility
   };
 
   return (
@@ -30,13 +36,20 @@ function Dashboard() {
           <BsSearch />
           <input type="text" placeholder="Search for data, users, docs" />
           <FaRegBell />
-          <div className="user-dropdown">
-            <p className="user-button">
-                  {user?.username} {/* Display username */}
-            </p>
-            <div className="user-dropdown-content">
-              <button onClick={handleLogout}>Logout</button>
-            </div>
+
+          <div className="dropdown">
+            <button
+              className="btn btn-secondary dropdown-toggle"
+              type="button"
+              onClick={toggleDropdown} // Toggle dropdown on button click
+            >
+              {user?.username}
+            </button>
+            {dropdownOpen && ( // Conditionally render the dropdown menu
+              <ul className="dropdown-menu show">
+                <li><a className="dropdown-item" onClick={handleLogout}>Logout</a></li>
+              </ul>
+            )}
           </div>
         </div>
 

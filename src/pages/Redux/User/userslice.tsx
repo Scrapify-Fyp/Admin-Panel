@@ -1,29 +1,32 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+// src/pages/Redux/User/userslice.tsx
+
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../store'; // Correctly import RootState
 
 interface UserState {
-  user: any | null; // Replace 'any' with the specific type if you have one
+  user: any | null;  // Define your user state type
 }
 
 const initialState: UserState = {
-  user: null,
+  user: JSON.parse(localStorage.getItem('user') || 'null'),
 };
 
 const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<any>) => {
-      // Replace 'any' with the specific type if you have one
       state.user = action.payload;
+      localStorage.setItem('user', JSON.stringify(action.payload));
     },
     clearUser: (state) => {
       state.user = null;
-      console.log("User after logout: ", state);
+      localStorage.removeItem('user');
     },
   },
 });
 
 export const { setUser, clearUser } = userSlice.actions;
-export const selectUser = (state: { user: UserState }) => state.user.user;
+export const selectUser = (state: RootState) => state.user.user;
 
 export default userSlice.reducer;

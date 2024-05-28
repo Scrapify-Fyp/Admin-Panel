@@ -10,14 +10,21 @@ import {
 } from "@tanstack/react-table";
 
 function TableHOC<T>(
-  columns: ColumnDef<T, any>[],  // Corrected type
+  columns: ColumnDef<T, any>[],
   InputData: T[],
   containerClassname: string,
   heading: string,
   showPagination: boolean = false
 ) {
-  const [data] = React.useState(() => [...InputData]);  // Removed unused setData
+  const [data, setData] = React.useState<T[]>(InputData);
   const [sorting, setSorting] = React.useState<SortingState>([]);
+
+  // Update data when InputData changes
+  React.useEffect(() => {
+    setData(InputData);
+  }, [InputData]);
+
+  // console.log("Data:", data);
 
   const table = useReactTable({
     data,
