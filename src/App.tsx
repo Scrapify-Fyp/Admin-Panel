@@ -14,6 +14,8 @@ const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Products = lazy(() => import('./pages/Products'));
 const Transaction = lazy(() => import('./pages/Transaction'));
 const Customers = lazy(() => import('./pages/Customers'));
+const Settings = lazy(() => import('./pages/Settings'));
+const Accounts = lazy(() => import('./pages/Accounts'));
 const NewProduct = lazy(() => import('./pages/management/NewProduct'));
 const ProductManagement = lazy(() => import('./pages/management/ProductManagement'));
 const TransactionManagement = lazy(() => import('./pages/management/TransactionManagement'));
@@ -60,6 +62,14 @@ function App() {
               <Transaction />
             </Protectedroute>
           } />
+          <Route path="/admin/settings" element={
+            <Protectedroute>
+              <Settings />
+            </Protectedroute>} />
+          <Route path="/admin/accounts" element={
+            <Protectedroute>
+              <Accounts />
+            </Protectedroute>} />
           <Route path="/admin/product/new" element={
             <Protectedroute>
               <NewProduct />

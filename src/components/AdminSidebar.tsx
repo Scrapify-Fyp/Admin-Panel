@@ -31,6 +31,8 @@ const AdminSidebar = () => {
     "/admin/product",
     "/admin/customer",
     "/admin/transaction",
+    "/admin/settings",
+    "admin/accounts",
   ];
 
   const location = useLocation();
