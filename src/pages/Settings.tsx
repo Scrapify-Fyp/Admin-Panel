@@ -1,7 +1,11 @@
+import AdminSidebar from '../components/AdminSidebar';
 import './settings.scss';
 
 const SettingsPage = () => {
   return (
+    <div className="admin-container">
+      <AdminSidebar/>
+      <main>
     <div className="settings-page">
       <h1>Settings</h1>
 
@@ -52,6 +56,8 @@ const SettingsPage = () => {
         
         <button className="update-button">Update</button>
       </div>
+    </div>
+    </main>
     </div>
   );
 }
