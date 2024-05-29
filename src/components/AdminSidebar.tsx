@@ -2,15 +2,6 @@ import { IconType } from "react-icons";
 import { Link, Location, useLocation } from "react-router-dom";
 
 import { AiFillFileText } from "react-icons/ai";
-// import {
-//   FaChartBar,
-//   FaChartLine, 
-//   FaChartPie,
-//   FaGamepad,
-//   FaStopwatch,
-// } from "react-icons/fa";
-
-// import { HiMenuAlt4 } from "react-icons/hi";
 import { IoIosPeople } from "react-icons/io";
 import {
   RiDashboardFill,
@@ -19,48 +10,30 @@ import {
 
 const AdminSidebar = () => {
 
-  //linksText
   const dashboardlinksText = [
     "Dashboard",
     "Product",
-    "User",
+    "Users",
     "Transaction",
+    "Settings",
+    "Account",
   ];
-  // const chartslinksText = ["Bar", "Pie", "Line"];
-  // const appslinksText = ["Stopwatch", "Coupon", "Toss"];
 
-  //links icons
   const dashboardIcons = [
     RiDashboardFill,
     RiShoppingBag3Fill,
     IoIosPeople,
     AiFillFileText,
   ];
-  // const chartsIcons = [FaChartBar, FaChartPie, FaChartLine];
-  // const appsIcons = [FaStopwatch, RiCoupon3Fill, FaGamepad];
 
-  //links URLs
   const dashboardlinksUrl = [
     "/admin/dashboard",
     "/admin/product",
     "/admin/customer",
-    // "/admin/customer",
     "/admin/transaction",
   ];
-  // const appslinksUrl = [
-  //   "/admin/chart/bar",
-  //   "/admin/chart/pie",
-  //   "/admin/chart/line",
-  // ];
-  // const chartslinksUrl = [
-  //   "/admin/app/stopwatch",
-  //   "/admin/app/coupon",
-  //   "/admin/app/toss",
-  // ];
 
   const location = useLocation();
-
-  // console.log(location);
 
   return (
     <aside>
@@ -70,9 +43,8 @@ const AdminSidebar = () => {
         location={location}
         text={dashboardlinksText}
         url={dashboardlinksUrl}
-        Icon={dashboardIcons}
+        Icon={RiDashboardFill} 
       />
-
     </aside>
   );
 };
@@ -82,7 +54,7 @@ interface divContent {
   location: Location;
   text: string[];
   url: string[];
-  Icon: IconType[];
+  Icon: IconType;
 }
 
 const Div = ({ divTitle, location, text, url, Icon }: divContent) => {
@@ -96,7 +68,7 @@ const Div = ({ divTitle, location, text, url, Icon }: divContent) => {
             <Li
               text={element}
               url={url[index]}
-              Icon={Icon[index]}
+              Icon={Icon} // Passing the same Icon to all Li components
               location={location}
               key={element}
             />
