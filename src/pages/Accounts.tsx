@@ -1,7 +1,11 @@
+import AdminSidebar from '../components/AdminSidebar';
 import './accounts.scss';
 
 const AccountsPage = () => {
   return (
+    <div className="admin-container">
+      <AdminSidebar/>
+<main>
     <div className="accounts-page">
       <h1 className="heading">Accounts</h1>
       <div className="columns">
@@ -40,6 +44,8 @@ const AccountsPage = () => {
           </div>
         </div>
       </div>
+    </div>
+    </main>
     </div>
   );
 };

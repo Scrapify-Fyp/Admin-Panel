@@ -37,13 +37,14 @@ export interface DataType {
   ];
 
 const DashboardTable = ({ InputData = []}:{InputData: DataType[] }) => {
-    
+  const loading: boolean = false   
   return TableHOC<DataType>(
     columns,
     InputData,
     "transaction-box",
     "Top Transaction",
-    true
+    true,
+    loading
   )
 }
 
