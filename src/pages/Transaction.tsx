@@ -77,7 +77,7 @@ const columnHelper = createColumnHelper<DataType>();
 
 function Transaction() {
   const [data,setArr] = useState<DataType[]>(arr)
-
+  const loading: boolean = false 
     return (
       <div className="admin-container">
         <AdminSidebar />
@@ -87,7 +87,8 @@ function Transaction() {
             data,
             "dashboard-product-box",
             "Products",
-            true
+            true,
+            loading
           )}
         </main>
       </div>
