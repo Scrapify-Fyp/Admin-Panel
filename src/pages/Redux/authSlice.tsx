@@ -1,4 +1,3 @@
-// authreducer.tsx
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
 
@@ -39,7 +38,7 @@ export const { loginSuccess, logoutSuccess, loginFailure } = authSlice.actions;
 
 // Selector function to select user from state
 export const selectUser = createSelector(
-  (state: RootState) => state.auth.user,
+  (state: RootState) => state.user.user,
   (user) => user
 );
 

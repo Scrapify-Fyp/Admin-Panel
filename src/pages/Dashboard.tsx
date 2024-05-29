@@ -16,7 +16,7 @@ import { logout } from "./Redux/actions/authaction"; // Action to logout
 function Dashboard() {
   const navigate = useNavigate();
    const dispatch = useDispatch();
-  const user = useAuth(); // Access user from Redux
+  const admin = useAuth(); // Access user from Redux
   const [dropdownOpen, setDropdownOpen] = useState(false); // State to manage dropdown visibility
 
   const handleLogout = () => {
@@ -43,7 +43,7 @@ function Dashboard() {
               type="button"
               onClick={toggleDropdown} // Toggle dropdown on button click
             >
-              {user?.username}
+              {admin?.username}
             </button>
             {dropdownOpen && ( // Conditionally render the dropdown menu
               <ul className="dropdown-menu show">

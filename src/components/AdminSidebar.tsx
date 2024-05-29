@@ -23,7 +23,7 @@ const AdminSidebar = () => {
   const dashboardlinksText = [
     "Dashboard",
     "Product",
-    "Customer",
+    "User",
     "Transaction",
   ];
   // const chartslinksText = ["Bar", "Pie", "Line"];
@@ -44,6 +44,7 @@ const AdminSidebar = () => {
     "/admin/dashboard",
     "/admin/product",
     "/admin/customer",
+    // "/admin/customer",
     "/admin/transaction",
   ];
   // const appslinksUrl = [
