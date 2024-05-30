@@ -232,6 +232,7 @@ import TableHOC from "../components/TableHOC";
 import { createColumnHelper } from "@tanstack/react-table";
 import axios from 'axios';
 import { FaTrash } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 interface DataType {
   _id: string;
@@ -300,19 +301,21 @@ function Customers() {
           name: user.firstName,
           email: user.email,
           role: user.lastLoginDate,
+
           manage: (
-            <button
-              onClick={() => handleManage(index,user._id)} 
-              style={{
-                width: "80px",
-                textDecoration: 'none',
-                backgroundColor: 'rgba(44, 104, 255, 0.455)',
-                padding: '0.25rem 0.5rem',
-                borderRadius: '10px',
-              }}
-            >
-              Manage
-            </button>
+            <Link to={`/admin/customer/${user._id}`}>
+              <button
+                style={{
+                  width: "80px",
+                  textDecoration: 'none',
+                 // backgroundColor: 'rgba(44, 104, 255, 0.455)',
+                  padding: '0.25rem 0.5rem',
+                  borderRadius: '10px',
+                }}
+              >
+                Manage
+              </button>
+            </Link>
           ),
           action: (
             <button
@@ -339,10 +342,6 @@ function Customers() {
       });
   }, []);
 
-  const handleManage = (index: number, userId: string) => {
-    // Add your manage logic here
-  };
-
   const handleDelete = (index: number, userId: string) => {
     axios.delete(`http://localhost:3002/users/${userId}`)
     .then(() => {
@@ -356,7 +355,6 @@ function Customers() {
       console.error('Error deleting product:', error);
     });
   };
-  
 
   return (
     <div className="admin-container">

@@ -45,15 +45,15 @@ const ManageProduct: React.FC = () => {
       <form onSubmit={handleSubmit}>
         <div className="row">
           <div className="col">
-            <label>Name</label>
+            <label><strong>Name</strong></label>
             <input type="text" name="name" value={formData.name} onChange={handleChange} />
           </div>
           <div className="col">
-            <label>Price</label>
+            <label><strong>Price</strong></label>
             <input type="number" name="price" value={formData.price} onChange={handleChange} />
           </div>
           <div className="col">
-            <label>Quantity</label>
+            <label><strong>Quantity</strong></label>
             <input type="number" name="quantity" value={formData.quantity} onChange={handleChange} />
           </div>
         </div>
