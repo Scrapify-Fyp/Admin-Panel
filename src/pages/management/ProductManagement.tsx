@@ -72,7 +72,7 @@ const ManageProduct: React.FC = () => {
             <input type="number" name="price" value={formData.price} onChange={handleChange} />
           </div>
           <div className="col">
-          <label>Quantity</label>
+          <label><strong>Quantity</strong></label>
           <input type="number" name="stockQuantity" value={formData.stockQuantity} onChange={handleChange} />
         </div>
 
