@@ -11,6 +11,7 @@ interface DataType {
   name: string;
   email: string;
   role: string;
+  manage: ReactElement; // Added manage column
   action: ReactElement;
 }
 
@@ -33,6 +34,11 @@ const columns = [
   }),
   columnHelper.accessor("role", {
     header: () => 'last Login Date/time',
+    cell: (info) => info.getValue(),
+    footer: (info) => info.column.id,
+  }),
+  columnHelper.accessor("manage", {  // Manage column definition
+    header: () => 'Manage',
     cell: (info) => info.getValue(),
     footer: (info) => info.column.id,
   }),
@@ -66,6 +72,20 @@ function Customers() {
           name: user.firstName,
           email: user.email,
           role: user.lastLoginDate,
+          manage: (
+            <button
+              onClick={() => handleManage(index,user._id)} 
+              style={{
+                width: "80px",
+                textDecoration: 'none',
+                backgroundColor: 'rgba(44, 104, 255, 0.455)',
+                padding: '0.25rem 0.5rem',
+                borderRadius: '10px',
+              }}
+            >
+              Manage
+            </button>
+          ),
           action: (
             <button
               onClick={() => handleDelete(index, user._id)} 
@@ -89,6 +109,10 @@ function Customers() {
         setLoading(false);
       });
   }, []);
+
+  const handleManage = (index: number, userId: string) => {
+    // Add your manage logic here
+  };
 
   const handleDelete = (index: number, userId: string) => {
     const confirmed = window.confirm('Are you sure you want to delete this user?');

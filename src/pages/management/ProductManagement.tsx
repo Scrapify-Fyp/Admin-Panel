@@ -1,135 +1,134 @@
-import { ChangeEvent, FormEvent, useState } from "react";
-import AdminSidebar from "../../components/AdminSidebar";
+import React, { useState } from "react";
+import './productmanagement.scss';
 
-const img =
-  "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c2hvZXN8ZW58MHx8MHx8&w=1000&q=804";
-  const ProductManagement = () => {
-  const [name, setName] = useState<string>("Puma Shoes");
-  const [price, setPrice] = useState<number>(2000);
-  const [stock, setStock] = useState<number>(10);
-  const [photo, setPhoto] = useState<string>(img);
+const ManageProduct: React.FC = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    price: 0,
+    quantity: 0,
+    description: "",
+    category: "",
+    brand: "",
+    imageUrl: "",
+    file: "",
+    weight: "",
+    length: "",
+    height: "",
+    discount: 0,
+    rating: 0,
+    keywords: "",
+    color: "",
+    material: "",
+    availabilityStatus: "",
+  });
 
-  const [nameUpdate, setNameUpdate] = useState<string>(name);
-  const [priceUpdate, setPriceUpdate] = useState<number>(price);
-  const [stockUpdate, setStockUpdate] = useState<number>(stock);
-  const [photoUpdate, setPhotoUpdate] = useState<string>(photo);
-
-  const changeImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const file: File | undefined = e.target.files?.[0];
-
-    const reader: FileReader = new FileReader();
-
-    if (file) {
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        if (typeof reader.result === "string") setPhotoUpdate(reader.result);
-      };
-    }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
-  const submitHandler = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setName(nameUpdate);
-    setPrice(priceUpdate);
-    setStock(stockUpdate);
-    setPhoto(photoUpdate);
+    // Handle form submission
+    console.log(formData);
+  };
+
+  const handleClick = () => {
+    // Handle close button click (e.g., go back to previous page)
+    window.history.back();
   };
 
   return (
-    <div className="admin-container">
-      <AdminSidebar />
-      <main className="product-management">
-        <section>
-          <strong>ID - Javeriaalam</strong>
-          <img src={photo} alt="Product" />
-          <p>{name}</p>
-          {stock > 0 ? (
-            <span className="green">{stock} Available</span>
-          ) : (
-            <span className="red">Not Available</span>
-          )}
-          <h3>${price}</h3>
-        </section>
-
-        <article>
-          <form onSubmit={(e) => submitHandler(e)}>
-            <div className="manage-header">
-              <div style={{display:"flex",justifyContent: "space-between"}}>
-              <h2>Manage</h2>
-              <button 
-              className="close-button" 
-              onClick={() => console.log("Close button clicked")}
-              style={{ 
-                backgroundColor: "transparent", 
-                border: "none",
-                outline: "none",
-                cursor: "pointer"
-              }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="icon icon-tabler icon-tabler-x"
-                width="30"
-                height="30"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            </button>
-
-              </div>
-              
-            </div>
-            <div>
-              <label>Name</label>
-              <input
-                required
-                type="text"
-                placeholder="Name"
-                value={nameUpdate}
-                onChange={(e) => setNameUpdate(e.target.value)}
-              />
-            </div>
-            <div>
-              <label>Price</label>
-              <input
-                required
-                type="number"
-                placeholder="Price"
-                value={priceUpdate}
-                onChange={(e) => setPriceUpdate(Number(e.target.value))}
-              />
-            </div>
-            <div>
-              <label>Stock</label>
-              <input
-                required
-                type="number"
-                placeholder="Stock"
-                value={stockUpdate}
-                onChange={(e) => setStockUpdate(Number(e.target.value))}
-              />
-            </div>
-
-            <div>
-              <label>Photo</label>
-              <input required type="file" onChange={changeImageHandler} />
-            </div>
-
-            {photoUpdate && <img src={photoUpdate} alt="New Image" />}
-
-            <button type="submit">Update</button>
-          </form>
-        </article>
-      </main>
+    <div className="manage-product-container">
+      <div className="close-button" onClick={handleClick}>&#10006;</div>
+      <h1>Manage Product</h1>
+      <form onSubmit={handleSubmit}>
+        <div className="row">
+          <div className="col">
+            <label>Name</label>
+            <input type="text" name="name" value={formData.name} onChange={handleChange} />
+          </div>
+          <div className="col">
+            <label>Price</label>
+            <input type="number" name="price" value={formData.price} onChange={handleChange} />
+          </div>
+          <div className="col">
+            <label>Quantity</label>
+            <input type="number" name="quantity" value={formData.quantity} onChange={handleChange} />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <label><strong>Description</strong></label>
+            <textarea name="description" value={formData.description} onChange={handleChange} />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <label><strong>Category</strong></label>
+            <input type="text" name="category" value={formData.category} onChange={handleChange} />
+          </div>
+          <div className="col">
+            <label><strong>Brand</strong></label>
+            <input type="text" name="brand" value={formData.brand} onChange={handleChange} />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <label><strong>Image URL</strong></label>
+            <input type="text" name="imageUrl" value={formData.imageUrl} onChange={handleChange} />
+          </div>
+          <div className="col">
+            <label><strong>Choose File</strong></label>
+            <input type="file" name="file" onChange={handleChange} />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <label><strong>Weight</strong></label>
+            <input type="text" name="weight" value={formData.weight} onChange={handleChange} />
+          </div>
+          <div className="col">
+            <label><strong>Length</strong></label>
+            <input type="text" name="length" value={formData.length} onChange={handleChange} />
+          </div>
+          <div className="col">
+            <label><strong>Height</strong></label>
+            <input type="text" name="height" value={formData.height} onChange={handleChange} />
+          </div>
+          <div className="col">
+            <label><strong>Discount</strong></label>
+            <input type="number" name="discount" value={formData.discount} onChange={handleChange} />
+          </div>
+          <div className="col">
+            <label><strong>Rating</strong></label>
+            <input type="number" name="rating" value={formData.rating} onChange={handleChange} />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <label><strong>Keywords</strong></label>
+            <input type="text" name="keywords" value={formData.keywords} onChange={handleChange} />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <label><strong>Color</strong></label>
+            <input type="text" name="color" value={formData.color} onChange={handleChange} />
+          </div>
+          <div className="col">
+            <label><strong>Material</strong></label>
+            <input type="text" name="material" value={formData.material} onChange={handleChange} />
+          </div>
+          <div className="col">
+            <label><strong>Availability Status</strong></label>
+            <input type="text" name="availabilityStatus" value={formData.availabilityStatus} onChange={handleChange} />
+          </div>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
     </div>
   );
 };
-export default ProductManagement;
+
+export default ManageProduct;

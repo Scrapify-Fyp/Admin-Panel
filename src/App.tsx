@@ -19,6 +19,7 @@ const Accounts = lazy(() => import('./pages/Accounts'));
 const NewProduct = lazy(() => import('./pages/management/NewProduct'));
 const ProductManagement = lazy(() => import('./pages/management/ProductManagement'));
 const TransactionManagement = lazy(() => import('./pages/management/TransactionManagement'));
+const CustomerManagement = lazy(() => import('./pages/management/CustomerManagement'));
 
 function App() {
   // const user = useSelector((state: RootState) => selectUser(state)); 
@@ -86,6 +87,12 @@ function App() {
               <TransactionManagement />
             </Protectedroute>
           } />
+          <Route path="/admin/customer/:id" element={
+            <Protectedroute>
+              <CustomerManagement />
+            </Protectedroute>
+          }
+          />
         </Routes>
       </Suspense>
     </Router>
