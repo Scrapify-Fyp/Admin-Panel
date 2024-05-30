@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 import './productmanagement.scss';
 
 const ManageProduct: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const history = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     price: 0,
@@ -22,6 +27,16 @@ const ManageProduct: React.FC = () => {
     availabilityStatus: "",
   });
 
+  useEffect(() => {
+    axios.get(`http://localhost:3002/products/${id}`)
+      .then(response => {
+        setFormData(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching product:', error);
+      });
+  }, [id]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -29,14 +44,18 @@ const ManageProduct: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log(formData);
+    axios.patch(`http://localhost:3002/products/${id}`, formData)
+      .then(response => {
+        console.log('Product updated successfully:', response.data);
+        history("/admin/product");
+      })
+      .catch(error => {
+        console.error('Error updating product:', error);
+      });
   };
 
   const handleClick = () => {
-    // Handle close button click (e.g., go back to previous page)
-    window.history.back();
-  };
+ history("/admin/product");  };
 
   return (
     <div className="manage-product-container">
@@ -125,7 +144,7 @@ const ManageProduct: React.FC = () => {
             <input type="text" name="availabilityStatus" value={formData.availabilityStatus} onChange={handleChange} />
           </div>
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit">Save</button>
       </form>
     </div>
   );
