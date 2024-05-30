@@ -9,22 +9,22 @@ const ManageProduct: React.FC = () => {
 
   const [formData, setFormData] = useState({
     name: "",
-    price: 0,
-    quantity: 0,
     description: "",
+    price: 0,
     category: "",
+    stockQuantity: 0,
+    imageURL: [],
     brand: "",
-    imageUrl: "",
-    file: "",
     weight: "",
-    length: "",
-    height: "",
-    discount: 0,
-    rating: 0,
-    keywords: "",
+    length: 0,
+    width: 0,
+    height: 0,
     color: "",
     material: "",
-    availabilityStatus: "",
+    keywords: [],
+    rating: 0,
+    discounts: "",
+    availabilityStatus: "available",
   });
 
   useEffect(() => {
@@ -72,9 +72,10 @@ const ManageProduct: React.FC = () => {
             <input type="number" name="price" value={formData.price} onChange={handleChange} />
           </div>
           <div className="col">
-            <label>Quantity</label>
-            <input type="number" name="quantity" value={formData.quantity} onChange={handleChange} />
-          </div>
+          <label>Quantity</label>
+          <input type="number" name="stockQuantity" value={formData.stockQuantity} onChange={handleChange} />
+        </div>
+
         </div>
         <div className="row">
           <div className="col">
@@ -95,7 +96,7 @@ const ManageProduct: React.FC = () => {
         <div className="row">
           <div className="col">
             <label><strong>Image URL</strong></label>
-            <input type="text" name="imageUrl" value={formData.imageUrl} onChange={handleChange} />
+            <input type="text" name="imageURL" value={formData.imageURL} onChange={handleChange} />
           </div>
           <div className="col">
             <label><strong>Choose File</strong></label>
@@ -117,7 +118,7 @@ const ManageProduct: React.FC = () => {
           </div>
           <div className="col">
             <label><strong>Discount</strong></label>
-            <input type="number" name="discount" value={formData.discount} onChange={handleChange} />
+            <input type="number" name="discounts" value={formData.discounts} onChange={handleChange} />
           </div>
           <div className="col">
             <label><strong>Rating</strong></label>
