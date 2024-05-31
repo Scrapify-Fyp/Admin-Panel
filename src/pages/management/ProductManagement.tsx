@@ -16,22 +16,24 @@ const ManageProduct: React.FC = () => {
 
   const [formData, setFormData] = useState({
     name: "",
-    price: 0,
-    quantity: 0,
     description: "",
+    price: 0,
     category: "",
+    stockQuantity: 0,
+    imageURL: [],
     brand: "",
-    imageUrl: "",
-    file: "",
     weight: "",
     length: "",
     height: "",
     discount: 0,
     rating: 0,
-    keywords: [] as Tag[],
+    keywords: "",
     color: "",
     material: "",
-    availabilityStatus: "",
+    keywords: [],
+    rating: 0,
+    discounts: "",
+    availabilityStatus: "available",
   });
 
   useEffect(() => {
@@ -106,15 +108,8 @@ const ManageProduct: React.FC = () => {
             />
           </div>
           <div className="col">
-            <label>
-              <strong>Quantity</strong>
-            </label>
-            <input
-              type="number"
-              name="quantity"
-              value={formData.quantity}
-              onChange={handleChange}
-            />
+            <label><strong>Quantity</strong></label>
+            <input type="number" name="quantity" value={formData.quantity} onChange={handleChange} />
           </div>
         </div>
         <div className="row">
@@ -159,15 +154,8 @@ const ManageProduct: React.FC = () => {
         </div>
         <div className="row">
           <div className="col">
-            <label>
-              <strong>Image URL</strong>
-            </label>
-            <input
-              type="text"
-              name="imageUrl"
-              value={formData.imageUrl}
-              onChange={handleChange}
-            />
+            <label><strong>Image URL</strong></label>
+            <input type="text" name="imageUrl" value={formData.imageUrl} onChange={handleChange} />
           </div>
           <div className="col">
             <label>
@@ -215,15 +203,8 @@ const ManageProduct: React.FC = () => {
             />
           </div>
           <div className="col">
-            <label>
-              <strong>Discount</strong>
-            </label>
-            <input
-              type="number"
-              name="discount"
-              value={formData.discount}
-              onChange={handleChange}
-            />
+            <label><strong>Discount</strong></label>
+            <input type="number" name="discount" value={formData.discount} onChange={handleChange} />
           </div>
           <div className="col">
             <label>
