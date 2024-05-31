@@ -15,24 +15,24 @@
 //   const navigate = useNavigate();
   
 //   const [formData, setFormData] = useState({
-//     name: "",
-//     description: "",
-//     price: 0,
-//     category: "",
-//     stockQuantity: 0,
-//     imageURL: "",
-//     brand: "",
-//     weight: "",
-//     length: 0,
-//     width: 0,
-//     height: 0,
-//     discount: 0,
-//     rating: 0,
-//     keywords: [] as Tag[],
-//     color: "",
-//     material: "",
-//     discounts: "",
-//     availabilityStatus: "available",
+    // name: "",
+    // description: "",
+    // price: 0,
+    // category: "",
+    // stockQuantity: 0,
+    // imageURL: "",
+    // brand: "",
+    // weight: "",
+    // length: 0,
+    // width: 0,
+    // height: 0,
+    // discount: 0,
+    // rating: 0,
+    // keywords: [] as Tag[],
+    // color: "",
+    // material: "",
+    // discounts: "",
+    // availabilityStatus: "available",
 //   });
 
 //   useEffect(() => {
@@ -316,18 +316,38 @@
 // };
 
 // export default ManageProduct;
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { WithContext as ReactTags, Tag as ReactTag} from 'react-tag-input';
 import "./productmanagement.scss";
+import TagInput from '../TagInput';
+
+interface FormData {
+  name: string;
+  description: string;
+  price: number;
+  category: string;
+  stockQuantity: number;
+  imageURL: string;
+  brand: string;
+  weight: string;
+  length: number;
+  width: number;
+  height: number;
+  discount: number;
+  rating: number;
+  keywords: string[];
+  color: string;
+  material: string;
+  discounts: string;
+  availabilityStatus: string;
+}
 
 const ManageProduct: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  
-  const [formData, setFormData] = useState({
+  const [tags, setTags] = useState<string[]>([]); // Define type explicitly as string[]
+  const [formData, setFormData] = useState<FormData>({ // Define type explicitly as FormData
     name: "",
     description: "",
     price: 0,
@@ -341,11 +361,11 @@ const ManageProduct: React.FC = () => {
     height: 0,
     discount: 0,
     rating: 0,
-    keywords: [] as ReactTag[],
+    keywords: [],
     color: "",
     material: "",
     discounts: "",
-    availabilityStatus: "available",
+    availabilityStatus: "",
   });
 
   useEffect(() => {
@@ -353,6 +373,7 @@ const ManageProduct: React.FC = () => {
       .get(`http://localhost:3002/products/${id}`)
       .then((response) => {
         setFormData(response.data);
+        setTags(response.data.keywords);
       })
       .catch((error) => {
         console.error("Error fetching product:", error);
@@ -362,36 +383,28 @@ const ManageProduct: React.FC = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    console.log(formData);
   };
 
-  const handleAddition = (tag: ReactTag) => {
-    const newTags = [...formData.keywords, tag];
+  const handleTagChange = (newTags: string[]) => {
     setFormData({ ...formData, keywords: newTags });
   };
-  
-  const handleDelete = (index: number) => {
-    const newKeywords = [...formData.keywords];
-    newKeywords.splice(index, 1);
-    setFormData({ ...formData, keywords: newKeywords });
-  };
-  
-  const handleSubmit = (e: React.FormEvent) => {
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    axios
-      .patch(`http://localhost:3002/products/${id}`, formData)
-      .then((response) => {
-        console.log("Product updated successfully:", response.data);
-        navigate("/admin/product");
-      })
-      .catch((error) => {
-        console.error("Error updating product:", error);
-      });
+    try {
+      await axios.patch(`http://localhost:3002/products/${id}`, formData);
+      console.log("Product updated successfully");
+      navigate("/admin/product");
+    } catch (error) {
+      console.error("Error updating product:", error);
+      // Handle error here
+    }
   };
 
   const handleClick = () => {
     navigate("/admin/product");
   };
-
   return (
     <div className="manage-product-container">
       <div className="close-button" onClick={handleClick}>
@@ -399,7 +412,6 @@ const ManageProduct: React.FC = () => {
       </div>
       <h1>Manage Product</h1>
       <form onSubmit={handleSubmit}>
-        {/* Form Inputs */}
         <div className="row">
           <div className="col">
             <label>
@@ -562,13 +574,13 @@ const ManageProduct: React.FC = () => {
             <label>
               <strong>Keywords</strong>
             </label>
-            <ReactTags
-            onChange={handleChange}
-  tags={formData.keywords}
-  handleDelete={handleDelete}
-  handleAddition={handleAddition}
-/>
-
+            <TagInput tags={tags} 
+              onChange={(e) => {
+                handleTagChange(e); // Call the first function
+                setTags(e); // Call the second function
+              }}
+            />
+            <p>Tags: {tags.join(', ')}</p>
           </div>
         </div>
         <div className="row">
