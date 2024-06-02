@@ -1,11 +1,11 @@
 import { IconType } from "react-icons";
 import { Link, Location, useLocation } from "react-router-dom";
 
-import { AiFillFileText } from "react-icons/ai";
-import { IoIosPeople } from "react-icons/io";
+// import { AiFillFileText } from "react-icons/ai";
+// import { IoIosPeople } from "react-icons/io";
 import {
   RiDashboardFill,
-  RiShoppingBag3Fill,
+  // RiShoppingBag3Fill,
 } from "react-icons/ri";
 
 const AdminSidebar = () => {
@@ -19,12 +19,12 @@ const AdminSidebar = () => {
     "Account",
   ];
 
-  const dashboardIcons = [
-    RiDashboardFill,
-    RiShoppingBag3Fill,
-    IoIosPeople,
-    AiFillFileText,
-  ];
+  // const dashboardIcons = [
+  //   RiDashboardFill,
+  //   RiShoppingBag3Fill,
+  //   IoIosPeople,
+  //   AiFillFileText,
+  // ];
 
   const dashboardlinksUrl = [
     "/admin/dashboard",
