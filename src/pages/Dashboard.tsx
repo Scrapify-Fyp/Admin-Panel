@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // import "./Dashboard.css";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -11,21 +11,41 @@ import { BarChart } from "../components/Charts";
 import { defaultData } from "../assets/rootData";
 import DashboardTable from "../components/DashboardTable";
 import { useAuth } from './auth';  
-import { logout } from "./Redux/actions/authaction"; // Action to logout
+import { logout } from "./Redux/actions/authaction"; 
+import axios from 'axios';
 
 function Dashboard() {
   const navigate = useNavigate();
    const dispatch = useDispatch();
-  const admin = useAuth(); // Access user from Redux
-  const [dropdownOpen, setDropdownOpen] = useState(false); // State to manage dropdown visibility
-
+  const admin = useAuth(); 
+  const [dropdownOpen, setDropdownOpen] = useState(false); 
+  const [usersCount, setUsersCount] = useState(0);
+  const [productsCount, setProductsCount] = useState(0);
   const handleLogout = () => {
     dispatch(logout());
     navigate("/");
   };
+  useEffect(() => {
+    axios
+    .get(`http://localhost:3002/users/count`)
+   .then((res) => {
+    setUsersCount(res.data.count)
+   })
+   .catch((error) => {
+    console.error("Error fetching product:", error);
+  });
 
+  axios
+  .get(`http://localhost:3002/products/count`)
+ .then((res) => {
+  setProductsCount(res.data.count)
+ })
+ .catch((error) => {
+  console.error("Error fetching product:", error);
+});
+  }, []);
   const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen); // Toggle dropdown visibility
+    setDropdownOpen(!dropdownOpen); 
   };
 
   return (
@@ -65,7 +85,7 @@ function Dashboard() {
           />
           <WidgetItem
             percent={-14}
-            value={400}
+            value={usersCount}
             heading="Users"
             color="rgb(0 198 202)"
           />
@@ -77,7 +97,7 @@ function Dashboard() {
           />
           <WidgetItem
             percent={30}
-            value={1000}
+            value={productsCount}
             heading="Products"
             color="rgb(76 0 255)"
           />
