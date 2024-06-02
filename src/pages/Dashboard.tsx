@@ -21,34 +21,59 @@ function Dashboard() {
   const [dropdownOpen, setDropdownOpen] = useState(false); 
   const [usersCount, setUsersCount] = useState(0);
   const [productsCount, setProductsCount] = useState(0);
+  const [rendumnumbersuser, setrendumnumbersuser] = useState(true);
+  const [rendumnumberproduct, setrendumnumbersproduct] = useState(true);
+  const [aCount, setaCount] = useState(0);
+  
   const handleLogout = () => {
     dispatch(logout());
     navigate("/");
   };
-  useEffect(() => {
-    axios
-    .get(`http://localhost:3002/users/count`)
-   .then((res) => {
-    setUsersCount(res.data.count)
-   })
-   .catch((error) => {
-    console.error("Error fetching product:", error);
-  });
 
-  axios
-  .get(`http://localhost:3002/products/count`)
- .then((res) => {
-  setProductsCount(res.data.count)
- })
- .catch((error) => {
-  console.error("Error fetching product:", error);
-});
+  const getRandomNumber = (min:any, max:any) => {
+    if (min >= max) {
+      throw new Error("Min should be less than max");
+    }
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+
+  setInterval(() => {
+    setaCount(getRandomNumber(1000, 9000));
+  }, 50);
+  
+
+    useEffect(() => {
+    const fetchData = () => {
+      axios
+        .get(`http://localhost:3002/products/count`)
+        .then((res) => {
+          setProductsCount(res.data.count);
+          setrendumnumbersproduct(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching product:", error);
+        });
+  
+      axios
+        .get(`http://localhost:3002/users/count`)
+        .then((res) => {
+          setUsersCount(res.data.count);
+          setrendumnumbersuser(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching product:", error);
+        });
+    };
+  
+    setTimeout(fetchData, 1000); 
   }, []);
+  
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen); 
   };
 
-  return (
+
+    return (
     <div className="admin-container">
       <AdminSidebar />
       <main className="dashboard">
@@ -79,25 +104,26 @@ function Dashboard() {
           <WidgetItem
             percent={40}
             amount={true}
-            value={340000}
+            value={ rendumnumbersuser ? getRandomNumber(1000, 9000) :7854}
             heading="Revenue"
             color="rgb(0,115,255)"
           />
           <WidgetItem
             percent={-14}
-            value={usersCount}
+            value={rendumnumbersuser ? getRandomNumber(1000, 9000) : usersCount.toString().padStart(4, '0')}
             heading="Users"
             color="rgb(0 198 202)"
           />
+
           <WidgetItem
             percent={80}
-            value={23000}
+            value={ rendumnumbersuser ? getRandomNumber(1000, 9000) :9860}
             heading="Transactions"
             color="rgb(255 196 0)"
           />
           <WidgetItem
             percent={30}
-            value={productsCount}
+            value={rendumnumberproduct ? getRandomNumber(1000, 9000) : productsCount.toString().padStart(4, '0')}
             heading="Products"
             color="rgb(76 0 255)"
           />
