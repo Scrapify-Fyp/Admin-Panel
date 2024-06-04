@@ -608,17 +608,6 @@ const ManageProduct: React.FC = () => {
           </div>
           <div className="col">
             <label>
-              <strong>Discounts</strong>
-            </label>
-            <input
-              type="text"
-              name="discounts"
-              value={formData.discounts}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="col">
-            <label>
               <strong>Availability Status</strong>
             </label>
             <select
