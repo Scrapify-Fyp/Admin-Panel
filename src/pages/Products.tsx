@@ -188,7 +188,7 @@ const Products = () => {
     axios.get('http://localhost:3002/products')
       .then(response => {
         const products = response.data.map((product: any, index: number) => ({
-          photo: <img src={product.imageURL} alt={product.name} />,
+          photo: <img src={product.imageURL[0]} alt={product.name} />,
           name: product.name,
           price: product.price,
           stock: product.stockQuantity,
