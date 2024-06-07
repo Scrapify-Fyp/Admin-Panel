@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './App.css';
+
 
 const App = () => {
   const [userProfile, setUserProfile] = useState({
@@ -15,7 +15,6 @@ const App = () => {
   const [products, setProducts] = useState([
     { id: 1, name: 'Product 1', rating: 4.5, price: 100, image: 'product1.jpg' },
     { id: 2, name: 'Product 2', rating: 3.5, price: 200, image: 'product2.jpg' },
-    // Add more products as needed
   ]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
