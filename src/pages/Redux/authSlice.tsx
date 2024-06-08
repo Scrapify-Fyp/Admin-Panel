@@ -1,15 +1,16 @@
+//authslice.tsx
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
 
 interface AuthState {
   isLoggedIn: boolean;
-  user: any;
+  admin: any;
   error: any;
 }
 
 const initialState: AuthState = {
   isLoggedIn: false,
-  user: null,
+  admin: null,
   error: null,
 };
 
@@ -19,12 +20,12 @@ const authSlice = createSlice({
   reducers: {
     loginSuccess: (state, action: PayloadAction<any>) => {
       state.isLoggedIn = true;
-      state.user = action.payload;
+      state.admin = action.payload;
       state.error = null;
     },
     logoutSuccess: (state) => {
       state.isLoggedIn = false;
-      state.user = null;
+      state.admin = null;
       state.error = null;
     },
     loginFailure: (state, action: PayloadAction<any>) => {
@@ -38,7 +39,7 @@ export const { loginSuccess, logoutSuccess, loginFailure } = authSlice.actions;
 
 // Selector function to select user from state
 export const selectUser = createSelector(
-  (state: RootState) => state.user.user,
+  (state: RootState) => state.admin, // Corrected to select 'user' from state
   (user) => user
 );
 

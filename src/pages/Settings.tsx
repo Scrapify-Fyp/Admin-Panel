@@ -1,65 +1,85 @@
+import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import AdminSidebar from '../components/AdminSidebar';
 import './settings.scss';
+import { useAuth } from './auth';  
 
 const SettingsPage = () => {
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const admin = useAuth();  
+  const navigate = useNavigate();  
+
+  const handleUpdatePassword = async () => {
+    if (!admin) {
+      alert('Admin is not authenticated');
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      alert('New password and confirm password do not match');
+      return;
+    }
+
+    try {
+      const response = await axios.patch(`http://localhost:3002/admins/update-password`, {
+        adminId: admin.id, 
+        oldPassword,
+        newPassword
+      });
+      if (response.status === 200) {
+        navigate('/admin/dashboard');  
+        alert('Password updated successfully');
+      }
+    } catch (error) {
+      console.error('Error updating password:', error);
+      alert('Failed to update password');
+    }
+  };
+
   return (
     <div className="admin-container">
-      <AdminSidebar/>
+      <AdminSidebar />
       <main>
-    <div className="settings-page">
-      <h1>Settings</h1>
-
-      <div className="settings-section">
-        <h2>Notification</h2>
-        <h3>Manage Notification</h3>
-        
-        <div className="notification-columns">
-          <div className="notification-column">
-            <h4>Email</h4>
+        <div className="settings-page">
+          <h1>Settings</h1>
+          <div className="settings-section">
+            <h2>Password</h2>
             <label>
-              <input type="checkbox" />
-              Product Updates
+              Old Password
+              <input
+                type="password"
+                value={oldPassword}
+                onChange={(e) => setOldPassword(e.target.value)}
+              />
             </label>
             <label>
-              <input type="checkbox" />
-              Security Updates
-            </label>
-          </div>
-
-          <div className="notification-column">
-            <h4>Phone</h4>
-            <label>
-              <input type="checkbox" />
-              Product Updates
+              New Password
+              <input
+                type="password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+              />
             </label>
             <label>
-              <input type="checkbox" />
-              Security Updates
+              Confirm Password
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
             </label>
+            <button className="update-button" onClick={handleUpdatePassword}>
+              Update
+            </button>
           </div>
         </div>
-        
-        <button className="save-button">Save Changes</button>
-      </div>
-
-      <div className="settings-section">
-        <h2>Password</h2>
-        
-        <label>
-          Password
-          <input type="password" />
-        </label>
-        <label>
-          Confirm Password
-          <input type="password" />
-        </label>
-        
-        <button className="update-button">Update</button>
-      </div>
-    </div>
-    </main>
+      </main>
     </div>
   );
-}
+};
 
 export default SettingsPage;

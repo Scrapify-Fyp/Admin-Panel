@@ -4,10 +4,11 @@ import  authReducer  from './authSlice';
 
 const store = configureStore({
   reducer: {
-    user: authReducer,  // Ensure this matches the slice name
+    admin: authReducer,  
   },
   
 });
+
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

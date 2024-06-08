@@ -38,7 +38,8 @@ function LoginPage() {
     } else {
         dispatch(loginSuccess(response.data.user));
         // console.log("hahahah...");
-        Cookies.set('token', response.data.token, { expires: 7 });        navigate('/admin/dashboard');
+        Cookies.set('token', response.data.token, { expires: 7 }); 
+        navigate('/admin/dashboard');
     }
     } catch (err:any) {
       console.error("Login error:", err);

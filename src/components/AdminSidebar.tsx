@@ -15,8 +15,8 @@ const AdminSidebar = () => {
     "Product",
     "Users",
     "Transaction",
-    "Settings",
     "Account",
+    "Settings",
   ];
 
   // const dashboardIcons = [
@@ -31,8 +31,8 @@ const AdminSidebar = () => {
     "/admin/product",
     "/admin/customer",
     "/admin/transaction",
-    "/admin/settings",
     "/admin/accounts",
+    "/admin/settings",
   ];
 
   const location = useLocation();

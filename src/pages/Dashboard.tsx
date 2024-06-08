@@ -82,16 +82,21 @@ function Dashboard() {
           <input type="text" placeholder="Search for data, users, docs" />
           <FaRegBell />
 
-          <div className="dropdown">
+          <div style={{marginRight:"22px",gap:"10px"}} className="dropdown">
             <button
+            style={{display:"flex",
+              gap: "10px",
+              alignItems: "center"}}
               className="btn btn-secondary dropdown-toggle"
               type="button"
-              onClick={toggleDropdown} // Toggle dropdown on button click
+              onClick={toggleDropdown} 
             >
-              {admin?.username}
+              <img style={{borderRadius:"50%" , width: '40px', height: '40px' }} src={admin?.imageUrl||"https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"} alt="" />
+              
             </button>
-            {dropdownOpen && ( // Conditionally render the dropdown menu
-              <ul className="dropdown-menu show">
+            {dropdownOpen && ( 
+              <ul style={{minWidth:"35px",textAlign:"center"}} className="dropdown-menu show">
+                <li><h5>Hi!{admin?.username}</h5></li>
                 <li><a className="dropdown-item" onClick={handleLogout}>Logout</a></li>
               </ul>
             )}
