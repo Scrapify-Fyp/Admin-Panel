@@ -21,7 +21,6 @@ interface FormData {
   keywords: string[];
   color: string;
   material: string;
-  discounts: string;
   availabilityStatus: string;
 }
 
@@ -46,10 +45,9 @@ const ManageProduct: React.FC = () => {
     keywords: [],
     color: "",
     material: "",
-    discounts: "",
     availabilityStatus: "",
   });
-  const [newImageURL, setNewImageURL] = useState("");
+  const [newImageFile, setNewImageFile] = useState<File | null>(null);
 
   useEffect(() => {
     axios
@@ -66,7 +64,6 @@ const ManageProduct: React.FC = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    console.log(formData);
   };
 
   const handleTagChange = (newTags: string[]) => {
@@ -81,7 +78,6 @@ const ManageProduct: React.FC = () => {
       navigate("/admin/product");
     } catch (error) {
       console.error("Error updating product:", error);
-      // Handle error here
     }
   };
 
@@ -89,9 +85,17 @@ const ManageProduct: React.FC = () => {
     navigate("/admin/product");
   };
 
-  const handleAddImageURL = () => {
-    setFormData({ ...formData, imageURL: [...formData.imageURL, newImageURL] });
-    setNewImageURL("");
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      setNewImageFile(file);
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData({ ...formData, imageURL: [...formData.imageURL, reader.result as string] });
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleRemoveImageURL = (index: number) => {
@@ -141,7 +145,6 @@ const ManageProduct: React.FC = () => {
             />
           </div>
         </div>
-        {/* Other Form Inputs */}
         <div className="row">
           <div className="col">
             <label>
@@ -180,28 +183,6 @@ const ManageProduct: React.FC = () => {
               value={formData.brand}
               onChange={handleChange}
             />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col">
-            <label>
-              <strong>Image URLs</strong>
-            </label>
-            <input
-              type="text"
-              value={newImageURL}
-              onChange={(e) => setNewImageURL(e.target.value)}
-            />
-            <button type="button" onClick={handleAddImageURL}>Add Image</button>
-            <div className="image-url-list">
-              {formData.imageURL.map((url, index) => (
-                <div key={index} className="image-url-item">
-                  <img style={{width:"200px",height:"200px", padding:"30px"}} src={url} alt={`Image ${index + 1}`} />
-                {/* <img src="https://i.imgur.com/sJL52hs.png" alt="" /> */}
-                  <button type="button" onClick={() => handleRemoveImageURL(index)}>Remove</button>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
         <div className="row">
@@ -277,20 +258,6 @@ const ManageProduct: React.FC = () => {
           </div>
           <div className="col">
             <label>
-              <strong>Keywords</strong>
-            </label>
-            <TagInput tags={tags} 
-              onChange={(e) => {
-                handleTagChange(e); 
-                setTags(e); 
-              }}
-            />
-            <p>Tags: {tags.join(', ')}</p>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col">
-            <label>
               <strong>Color</strong>
             </label>
             <input
@@ -300,6 +267,8 @@ const ManageProduct: React.FC = () => {
               onChange={handleChange}
             />
           </div>
+        </div>
+        <div className="row">
           <div className="col">
             <label>
               <strong>Material</strong>
@@ -324,6 +293,37 @@ const ManageProduct: React.FC = () => {
               <option value="In Stock">In Stock</option>
               <option value="Out of Stock">Out of Stock</option>
             </select>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <label>
+              <strong>Image URLs</strong>
+            </label>
+            <input
+              type="file"
+              onChange={handleFileChange}
+            />
+            <div className="image-url-list">
+              {formData.imageURL.map((url, index) => (
+                <div key={index} className="image-url-item">
+                  <img style={{width:"200px",height:"200px", padding:"30px"}} src={url} alt={`Image ${index + 1}`} />
+                  <button type="button" onClick={() => handleRemoveImageURL(index)}>Remove</button>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="col">
+            <label>
+              <strong>Keywords</strong>
+            </label>
+            <TagInput tags={tags} 
+              onChange={(e) => {
+                handleTagChange(e); 
+                setTags(e); 
+              }}
+            />
+            <p>Tags: {tags.join(', ')}</p>
           </div>
         </div>
         <button type="submit">Save</button>

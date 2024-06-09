@@ -1,79 +1,84 @@
 .manage-product-container {
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 800px;
     margin: 0 auto;
-    padding: 20px;
-}
-
-.close-button {
-    position: absolute;
-    top: 10px;
-    right: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+  
+  .manage-product-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #007bff;
+  }
+  
+  .manage-product-container .close-button {
     font-size: 15px;
     cursor: pointer;
-}
-
-.row {
+    float: right;
+    margin: 10px;
+  }
+  
+  .manage-product-container form {
     display: flex;
-    margin-bottom: 20px;
-}
-
-.col {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .manage-product-container .row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .manage-product-container .col {
     flex: 1;
-    margin-right: 10px;
-}
-
-.col:last-child {
-    margin-right: 0;
-}
-
-.row label {
+  }
+  
+  .manage-product-container .col label {
+    display: block;
     margin-bottom: 5px;
-}
-
-.row input,
-.row textarea {
+  }
+  
+  .manage-product-container .col input,
+  .manage-product-container .col select,
+  .manage-product-container .col textarea {
     width: 100%;
-    padding: 10px;
+    padding: 8px;
     border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-button {
+    border-radius: 4px;
+  }
+  
+  .manage-product-container .image-url-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .manage-product-container .image-url-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .manage-product-container .image-url-item button {
+    margin-top: 5px;
+  }
+  
+  .manage-product-container button[type="submit"] {
+    align-self: center;
     padding: 10px 20px;
     background-color: #007bff;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
-}
-
-button:hover {
+  }
+  
+  .manage-product-container button[type="submit"]:hover {
     background-color: #0056b3;
-}
-
-@media screen and (max-width: 600px) {
-    .manage-product-container {
-        padding: 10px;
-    }
-}
-
-select[name="category"],
-select[name="availabilityStatus"] {
-    display: flex;
-    width: 300px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    font-size: 14px;
-    transition: border-color 0.3s ease-in-out;
-}
-
-select[name="category"]:focus,
-select[name="availabilityStatus"]:focus {
-    border-color: #007bff;
-}
-
-select[name="category"] option,
-select[name="availabilityStatus"] option {
-    font-size: 14px;
-}
+  }
+  

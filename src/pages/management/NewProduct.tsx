@@ -1,81 +1,335 @@
-import { ChangeEvent, useState } from "react";
-import AdminSidebar from "../../components/AdminSidebar";
-import { TbSettingsFilled } from "react-icons/tb";
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import "./productmanagement.scss";
+import TagInput from '../TagInput';
 
-const NewProduct = () => {
-  const [name, setName] = useState<string>("");
-  const [price, setPrice] = useState<number>();
-  const [stock, setStock] = useState<number>();
-  const [photo, setPhoto] = useState<string>();
+interface FormData {
+  name: string;
+  description: string;
+  price: number;
+  category: string;
+  stockQuantity: number;
+  imageURL: string[];
+  brand: string;
+  weight: string;
+  length: number;
+  width: number;
+  height: number;
+  discount: number;
+  rating: number;
+  keywords: string[];
+  color: string;
+  material: string;
+  availabilityStatus: string;
+}
 
-  const changeImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const file: File | undefined = e.target.files?.[0];
-    // console.log(e.target.files?.[0]);
+const NewProduct: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const [tags, setTags] = useState<string[]>([]);
+  const [formData, setFormData] = useState<FormData>({
+    name: "",
+    description: "",
+    price: 0,
+    category: "",
+    stockQuantity: 0,
+    imageURL: [],
+    brand: "",
+    weight: "",
+    length: 0,
+    width: 0,
+    height: 0,
+    discount: 0,
+    rating: 0,
+    keywords: [],
+    color: "",
+    material: "",
+    availabilityStatus: "",
+  });
+  const [newImageFile, setNewImageFile] = useState<File | null>(null);
 
-    const reader: FileReader = new FileReader();
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3002/products/${id}`)
+      .then((response) => {
+        setFormData(response.data);
+        setTags(response.data.keywords);
+      })
+      .catch((error) => {
+        console.error("Error fetching product:", error);
+      });
+  }, [id]);
 
-    if (file) {
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        if (typeof reader.result === "string") TbSettingsFilled(reader.result);
-      };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleTagChange = (newTags: string[]) => {
+    setFormData({ ...formData, keywords: newTags });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await axios.patch(`http://localhost:3002/products/${id}`, formData);
+      console.log("Product updated successfully");
+      navigate("/admin/product");
+    } catch (error) {
+      console.error("Error updating product:", error);
     }
   };
 
+  const handleClick = () => {
+    navigate("/admin/product");
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      setNewImageFile(file);
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData({ ...formData, imageURL: [...formData.imageURL, reader.result as string] });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemoveImageURL = (index: number) => {
+    const updatedImageURLs = formData.imageURL.filter((_, i) => i !== index);
+    setFormData({ ...formData, imageURL: updatedImageURLs });
+  };
+
   return (
-    <div className="admin-container">
-      <AdminSidebar />
-      <main className="product-management">
-        <article>
-          <form>
-            <h2>New Product</h2>
-            <div>
-              <label>Name</label>
-              <input
-                required
-                type="text"
-                placeholder="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
+    <div className="manage-product-container">
+      <div className="close-button" onClick={handleClick}>
+        &#10006;
+      </div>
+      <h1>Add Product</h1>
+      <form onSubmit={handleSubmit}>
+        <div className="row">
+          <div className="col">
+            <label>
+              <strong>Name</strong>
+            </label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="col">
+            <label>
+              <strong>Price</strong>
+            </label>
+            <input
+              type="number"
+              name="price"
+              value={formData.price}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="col">
+            <label>
+              <strong>Quantity</strong>
+            </label>
+            <input
+              type="number"
+              name="stockQuantity"
+              value={formData.stockQuantity}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <label>
+              <strong>Description</strong>
+            </label>
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <label>
+              <strong>Category</strong>
+            </label>
+            <select
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+            >
+              <option value="">Select Category</option>
+              <option value="Category1">Category 1</option>
+              <option value="Category2">Category 2</option>
+              <option value="Category3">Category 3</option>
+            </select>
+          </div>
+          <div className="col">
+            <label>
+              <strong>Brand</strong>
+            </label>
+            <input
+              type="text"
+              name="brand"
+              value={formData.brand}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <label>
+              <strong>Weight</strong>
+            </label>
+            <input
+              type="text"
+              name="weight"
+              value={formData.weight}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="col">
+            <label>
+              <strong>Length</strong>
+            </label>
+            <input
+              type="text"
+              name="length"
+              value={formData.length}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <label>
+              <strong>Width</strong>
+            </label>
+            <input
+              type="text"
+              name="width"
+              value={formData.width}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="col">
+            <label>
+              <strong>Height</strong>
+            </label>
+            <input
+              type="text"
+              name="height"
+              value={formData.height}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="col">
+            <label>
+              <strong>Discount</strong>
+            </label>
+            <input
+              type="number"
+              name="discount"
+              value={formData.discount}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <label>
+              <strong>Rating</strong>
+            </label>
+            <input
+              type="number"
+              name="rating"
+              value={formData.rating}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="col">
+            <label>
+              <strong>Color</strong>
+            </label>
+            <input
+              type="text"
+              name="color"
+              value={formData.color}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <label>
+              <strong>Material</strong>
+            </label>
+            <input
+              type="text"
+              name="material"
+              value={formData.material}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="col">
+            <label>
+              <strong>Availability Status</strong>
+            </label>
+            <select
+              name="availabilityStatus"
+              value={formData.availabilityStatus}
+              onChange={handleChange}
+            >
+              <option value="">Select Availability Status</option>
+              <option value="In Stock">In Stock</option>
+              <option value="Out of Stock">Out of Stock</option>
+            </select>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <label>
+              <strong>Image URLs</strong>
+            </label>
+            <input
+              type="file"
+              onChange={handleFileChange}
+            />
+            <div className="image-url-list">
+              {formData.imageURL.map((url, index) => (
+                <div key={index} className="image-url-item">
+                  <img style={{width:"200px",height:"200px", padding:"30px"}} src={url} alt={`Image ${index + 1}`} />
+                  <button type="button" onClick={() => handleRemoveImageURL(index)}>Remove</button>
+                </div>
+              ))}
             </div>
-            <div>
-              <label>Price</label>
-              <input
-                required
-                type="number"
-                placeholder="Price"
-                value={price}
-                onChange={(e) => setPrice(Number(e.target.value))}
-              />
-            </div>
-            <div>
-              <label>Stock</label>
-              <input
-                required
-                type="number"
-                placeholder="Stock"
-                value={stock}
-                onChange={(e) => setStock(Number(e.target.value))}
-              />
-            </div>
-
-            <div>
-              <label>Photo</label>
-              <input
-                required
-                type="file"
-                onChange={(e) => changeImageHandler(e)}
-              />
-            </div>
-
-            {photo && <img src={photo} alt="New Image" />}
-
-            <button type="submit">Create</button>
-          </form>
-        </article>
-      </main>
+          </div>
+          <div className="col">
+            <label>
+              <strong>Keywords</strong>
+            </label>
+            <TagInput tags={tags} 
+              onChange={(e) => {
+                handleTagChange(e); 
+                setTags(e); 
+              }}
+            />
+            <p>Tags: {tags.join(', ')}</p>
+          </div>
+        </div>
+        <button type="submit">Save</button>
+      </form>
     </div>
   );
 };
+
 export default NewProduct;
