@@ -1,0 +1,131 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .return-button {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 15px;
+    cursor: pointer;
+}
+  .content {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .profile-section, .products-section {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 48%;
+  }
+  
+  .profile-section h2, .products-section h2 {
+    margin-top: 0;
+    color: #007bff; /* Blue color for headings */
+  }
+  
+  .profile-inputs input, .profile-inputs textarea {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+  }
+  
+  .image-section h3 {
+    margin-top: 0;
+    color: #007bff; /* Blue color for headings */
+  }
+  
+  .profile-image-preview {
+    margin-top: 10px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .save-button {
+    text-align: right;
+  }
+  
+  .save-button button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .save-button button:hover {
+    background-color: #0267d3;
+  }
+  
+  .products {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .product-card {
+    background: #f4f4f4;
+    height: 300px;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 10px;
+    flex: 1 1 calc(33% - 20px);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .product-card img {
+    width: 100%;
+    height: 40%;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .product-card h3 {
+    margin-top: 0;
+    color: #000000; 
+  }
+  
+  .delete-product {
+    cursor: pointer;
+    float: right;
+    color: #ff6b6b;
+    font-size: 1.2em;
+  }
+  
+  span {
+    color: gold;
+    font-size: 1.2em;
+  }
+  
