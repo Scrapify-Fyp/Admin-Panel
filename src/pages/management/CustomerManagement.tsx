@@ -1,22 +1,47 @@
-import React, { useState, ChangeEvent } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import "./customermanagement.scss";
-import { FaTrash } from 'react-icons/fa'; // Import Font Awesome trash icon
+import { FaPlus,FaTrash } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+
+// Define the Product interface
+interface Product {
+  _id: string;
+  name: string;
+  rating: number;
+  price: number;
+  imageURL: string;
+}
 
 const App = () => {
+  const { id } = useParams<{ id: string }>();
+// console.log(id);
+
   const [userProfile, setUserProfile] = useState({
     firstName: '',
     lastName: '',
     email: '',
     phone: '',
     address: '',
-    about: '',
-    profileImage: ''
+    bio: '',
+    imageUrl: ''
   });
 
-  const [products, setProducts] = useState([
-    { id: 1, name: 'Flowers', rating: 4.5, price: 500, image: 'https://img.freepik.com/free-photo/natures-beauty-captured-colorful-flower-close-up-generative-ai_188544-8593.jpg' },
-    { id: 2, name: 'Wall Hanging', rating: 3.5, price: 2000, image: 'https://vaaree.com/cdn/shop/products/wall-art-and-paintings-life-tree-wall-art-set-of-four-1.jpg?v=1715953682&width=600' },
-  ]);
+  // Use the Product interface to type the products state
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    // Fetch user profile
+    axios.get(`http://localhost:3002/users/${id}`)
+      .then(response => setUserProfile(response.data))
+      .catch(error => console.error("Error fetching user profile:", error));
+
+    // Fetch user products
+    axios.get(`http://localhost:3002/users/${id}/products`)
+      .then(response => setProducts(response.data.products))
+      .catch(error => console.error("Error fetching products:", error));
+  }, [id]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -25,16 +50,27 @@ const App = () => {
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setUserProfile({ ...userProfile, profileImage: URL.createObjectURL(e.target.files[0]) });
+      setUserProfile({ ...userProfile, imageUrl: URL.createObjectURL(e.target.files[0]) });
     }
   };
 
   const handleSaveChanges = () => {
-    // Logic to save changes
+    axios.patch(`http://localhost:3002/users/${id}`, userProfile)
+      .then(response => {
+        setUserProfile(response.data);
+        alert("User profile updated successfully");
+        handleReturn();
+      })
+      .catch(error => console.error("Error updating user profile:", error));
   };
 
-  const handleDeleteProduct = (id: number) => {
-    setProducts(products.filter(product => product.id !== id));
+  const handleDeleteProduct = (productId: string) => {
+    axios.delete(`http://localhost:3002/products/${productId}`)
+      .then(() => {
+        setProducts(products.filter(product => product._id !== productId));
+        alert("Product deleted successfully");
+      })
+      .catch(error => console.error("Error deleting product:", error));
   };
 
   const handleReturn = () => {
@@ -43,25 +79,27 @@ const App = () => {
 
   return (
     <div className="container">
-      <div className="return-button" onClick={handleReturn}>X</div>
+      <Link to={"/admin/customer"}><div className="return-button">X</div></Link>
 
       <div className="content">
         {/* User Profile Section */}
         <section className="profile-section">
           <h2>User Profile</h2>
           <div className="profile-inputs">
+            <div className="image-section">
+              {userProfile.imageUrl && <img src={userProfile.imageUrl} alt="Profile Preview" className="profile-image-preview" />}
+              <input style={{width:"300px"}} type="file" accept="image/*" onChange={handleImageChange} />
+              <br />
+              <br />
+            </div>
             <input type="text" name="firstName" placeholder="First Name" value={userProfile.firstName} onChange={handleInputChange} />
             <input type="text" name="lastName" placeholder="Last Name" value={userProfile.lastName} onChange={handleInputChange} />
             <input type="email" name="email" placeholder="Email" value={userProfile.email} onChange={handleInputChange} />
             <input type="text" name="phone" placeholder="Phone No." value={userProfile.phone} onChange={handleInputChange} />
             <input type="text" name="address" placeholder="Address" value={userProfile.address} onChange={handleInputChange} />
-            <textarea name="about" placeholder="About" value={userProfile.about} onChange={handleInputChange} />
+            <textarea name="bio" placeholder="About" value={userProfile.bio} onChange={handleInputChange} />
           </div>
-          <div className="image-section">
-            <h3>Add Image</h3>
-            <input type="file" accept="image/*" onChange={handleImageChange} />
-            {userProfile.profileImage && <img src={userProfile.profileImage} alt="Profile Preview" className="profile-image-preview" />}
-          </div>
+         
           <div className="save-button">
             <button onClick={handleSaveChanges}>Save Changes</button>
           </div>
@@ -70,14 +108,17 @@ const App = () => {
         {/* Products Section */}
         <section className="products-section">
           <h2>Products</h2>
+          <Link to= {`/admin/product/new/${id}`} className="create-product-btn">
+        <FaPlus />
+      </Link>
           <div className="products">
             {products.map(product => (
-              <div className="product-card" key={product.id}>
-                <img src={product.image} alt={product.name} className="product-image" />
+              <div className="product-card" key={product._id}>
+                <img src={product.imageURL} alt={product.name} className="product-image" />
                 <h4>{product.name}</h4>
                 <p>Rating: {renderStars(product.rating)}</p>
                 <p>Price: PKR {product.price}</p>
-                <div className="delete-product" onClick={() => handleDeleteProduct(product.id)}>
+                <div className="delete-product" onClick={() => handleDeleteProduct(product._id)}>
                   <FaTrash />
                 </div>
               </div>

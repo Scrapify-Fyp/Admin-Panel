@@ -1,10 +1,6 @@
-import { Suspense, lazy } from 'react';
-import { useEffect } from "react";
+import React, { Suspense, lazy, useEffect } from 'react'; // Add 'React' here
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import { useSelector } from 'react-redux';
-// import { RootState } from './pages/Redux/store';
-// import { selectUser } from './pages/Redux/authSlice'; // Import selectUser from your authSlice
 import { useAuth } from "./pages/auth"
 import LoginPage from './pages/Login';
 import { useDispatch } from "react-redux";
@@ -22,13 +18,12 @@ const TransactionManagement = lazy(() => import('./pages/management/TransactionM
 const CustomerManagement = lazy(() => import('./pages/management/CustomerManagement'));
 
 function App() {
-  // const user = useSelector((state: RootState) => selectUser(state)); 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchUser = () => {
+    const fetchUser = async () => { // make it async
       try {
-        const user = useAuth();
+        const user = await useAuth(); // await the promise
         dispatch(setUser(user));
       } catch (error) {
         console.error("Error fetching user:", error);
@@ -71,7 +66,7 @@ function App() {
             <Protectedroute>
               <Accounts />
             </Protectedroute>} />
-          <Route path="/admin/product/new" element={
+          <Route path="/admin/product/new/:id" element={
             <Protectedroute>
               <NewProduct />
             </Protectedroute>

@@ -3,7 +3,7 @@ import AdminSidebar from "../components/AdminSidebar";
 import TableHOC from "../components/TableHOC";
 import { createColumnHelper } from "@tanstack/react-table";
 import axios from 'axios';
-import { FaTrash } from "react-icons/fa";
+import { FaPlus,FaTrash } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 
 interface DataType {
@@ -145,7 +145,11 @@ function Customers() {
           loading
         )}
       </main>
+      <Link to="" className="create-product-btn">
+     <FaPlus />
+   </Link>
     </div>
+     
   );
 }
 

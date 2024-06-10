@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import "./productmanagement.scss";
@@ -22,10 +22,13 @@ interface FormData {
   color: string;
   material: string;
   availabilityStatus: string;
+  vendorId: string;
 }
 
 const NewProduct: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{ id: string }>(); // Use useParams inside the component
+  // console.log(id);
+  
   const navigate = useNavigate();
   const [tags, setTags] = useState<string[]>([]);
   const [formData, setFormData] = useState<FormData>({
@@ -45,25 +48,18 @@ const NewProduct: React.FC = () => {
     keywords: [],
     color: "",
     material: "",
-    availabilityStatus: "",
+    availabilityStatus: "available",
+    vendorId: id || "",
   });
+  
   const [newImageFile, setNewImageFile] = useState<File | null>(null);
-
-  useEffect(() => {
-    axios
-      .get(`http://localhost:3002/products/${id}`)
-      .then((response) => {
-        setFormData(response.data);
-        setTags(response.data.keywords);
-      })
-      .catch((error) => {
-        console.error("Error fetching product:", error);
-      });
-  }, [id]);
+  const [newImageURL, setNewImageURL] = useState<string>("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    console.log(formData);
+    
   };
 
   const handleTagChange = (newTags: string[]) => {
@@ -73,16 +69,16 @@ const NewProduct: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.patch(`http://localhost:3002/products/${id}`, formData);
+      await axios.post(`http://localhost:3002/products`, formData);
       console.log("Product updated successfully");
-      navigate("/admin/product");
+      navigate(`/admin/customer/${id}`);
     } catch (error) {
       console.error("Error updating product:", error);
     }
   };
 
   const handleClick = () => {
-    navigate("/admin/product");
+    navigate(`/admin/customer/${id}`);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,6 +91,13 @@ const NewProduct: React.FC = () => {
         setFormData({ ...formData, imageURL: [...formData.imageURL, reader.result as string] });
       };
       reader.readAsDataURL(file);
+    }
+  };
+
+  const handleAddImageURL = () => {
+    if (newImageURL) {
+      setFormData({ ...formData, imageURL: [...formData.imageURL, newImageURL] });
+      setNewImageURL("");
     }
   };
 
@@ -202,7 +205,7 @@ const NewProduct: React.FC = () => {
               <strong>Length</strong>
             </label>
             <input
-              type="text"
+              type="number"
               name="length"
               value={formData.length}
               onChange={handleChange}
@@ -215,7 +218,7 @@ const NewProduct: React.FC = () => {
               <strong>Width</strong>
             </label>
             <input
-              type="text"
+              type="number"
               name="width"
               value={formData.width}
               onChange={handleChange}
@@ -226,7 +229,7 @@ const NewProduct: React.FC = () => {
               <strong>Height</strong>
             </label>
             <input
-              type="text"
+              type="number"
               name="height"
               value={formData.height}
               onChange={handleChange}
@@ -304,29 +307,32 @@ const NewProduct: React.FC = () => {
               type="file"
               onChange={handleFileChange}
             />
-            <div className="image-url-list">
+            <input
+              type="text"
+              placeholder="Add Image URL"
+              value={newImageURL}
+              onChange={(e) => setNewImageURL(e.target.value)}
+            />
+            <button type="button" onClick={handleAddImageURL}>Add URL</button>
+            <ul>
               {formData.imageURL.map((url, index) => (
-                <div key={index} className="image-url-item">
-                  <img style={{width:"200px",height:"200px", padding:"30px"}} src={url} alt={`Image ${index + 1}`} />
+                <li key={index}>
+                  <img src={url} alt={`Product ${index}`} style={{ width: "50px", height: "50px" }} />
                   <button type="button" onClick={() => handleRemoveImageURL(index)}>Remove</button>
-                </div>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
+        </div>
+        <div className="row">
           <div className="col">
             <label>
               <strong>Keywords</strong>
             </label>
-            <TagInput tags={tags} 
-              onChange={(e) => {
-                handleTagChange(e); 
-                setTags(e); 
-              }}
-            />
-            <p>Tags: {tags.join(', ')}</p>
+            <TagInput tags={tags} onChange={handleTagChange} />
           </div>
         </div>
-        <button type="submit">Save</button>
+        <button type="submit">Update Product</button>
       </form>
     </div>
   );

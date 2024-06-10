@@ -12,7 +12,7 @@ interface FormData {
   stockQuantity: number;
   imageURL: string[];
   brand: string;
-  weight: string;
+  weight: number;
   length: number;
   width: number;
   height: number;
@@ -36,7 +36,7 @@ const ManageProduct: React.FC = () => {
     stockQuantity: 0,
     imageURL: [],
     brand: "",
-    weight: "",
+    weight: 0,
     length: 0,
     width: 0,
     height: 0,
@@ -48,7 +48,7 @@ const ManageProduct: React.FC = () => {
     availabilityStatus: "",
   });
   const [newImageFile, setNewImageFile] = useState<File | null>(null);
-
+  const [newImageURL, setNewImageURL] = useState("");
   useEffect(() => {
     axios
       .get(`http://localhost:3002/products/${id}`)
@@ -64,6 +64,8 @@ const ManageProduct: React.FC = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    console.log(formData);
+    
   };
 
   const handleTagChange = (newTags: string[]) => {
@@ -72,7 +74,22 @@ const ManageProduct: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
     try {
+      // Handle file upload separately if a new file is selected
+      if (newImageFile) {
+        const formDataWithImage = new FormData();
+        formDataWithImage.append('image', newImageFile);
+        const uploadResponse = await axios.post('http://localhost:3002/upload', formDataWithImage, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+        const imagePath = uploadResponse.data.path;
+        formData.imageURL.push(imagePath); // Update imageURL with the new image path
+      }
+
+      // Update product information
       await axios.patch(`http://localhost:3002/products/${id}`, formData);
       console.log("Product updated successfully");
       navigate("/admin/product");
@@ -89,12 +106,6 @@ const ManageProduct: React.FC = () => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
       setNewImageFile(file);
-
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData({ ...formData, imageURL: [...formData.imageURL, reader.result as string] });
-      };
-      reader.readAsDataURL(file);
     }
   };
 
@@ -102,7 +113,10 @@ const ManageProduct: React.FC = () => {
     const updatedImageURLs = formData.imageURL.filter((_, i) => i !== index);
     setFormData({ ...formData, imageURL: updatedImageURLs });
   };
-
+  const handleAddImageURL = () => {
+    setFormData({ ...formData, imageURL: [...formData.imageURL, newImageURL] });
+    setNewImageURL("");
+  };
   return (
     <div className="manage-product-container">
       <div className="close-button" onClick={handleClick}>
@@ -298,19 +312,35 @@ const ManageProduct: React.FC = () => {
         <div className="row">
           <div className="col">
             <label>
-              <strong>Image URLs</strong>
+              <strong>Image</strong>
             </label>
             <input
               type="file"
               onChange={handleFileChange}
             />
+            OR
             <div className="image-url-list">
-              {formData.imageURL.map((url, index) => (
+              {/* {formData.imageURL.map((url, index) => (
                 <div key={index} className="image-url-item">
                   <img style={{width:"200px",height:"200px", padding:"30px"}} src={url} alt={`Image ${index + 1}`} />
                   <button type="button" onClick={() => handleRemoveImageURL(index)}>Remove</button>
                 </div>
+              ))} */}
+               <input
+              type="text"
+              value={newImageURL}
+              onChange={(e) => setNewImageURL(e.target.value)}
+              placeholder='Add url'
+            />
+            <button style={{height:"35px"}} className="btn btn-primary" type="button" onClick={handleAddImageURL}>Add Image</button>
+            <div style={{display:"flex",flexWrap:"wrap",width:"700px"}} className="image-url-list">
+              {formData.imageURL.map((url, index) => (
+                <div key={index}  className="image-url-item">
+                  <img style={{width:"200px",height:"200px", padding:"30px"}} src={url} alt={`Image ${index + 1}`} />
+                  <button className="btn btn-danger" type="button" onClick={() => handleRemoveImageURL(index)}>Remove</button>
+                </div>
               ))}
+            </div>
             </div>
           </div>
           <div className="col">
