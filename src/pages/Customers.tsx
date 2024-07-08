@@ -148,6 +148,9 @@ function Customers() {
       <Link to="" className="create-product-btn">
      <FaPlus />
    </Link>
+      <Link to="/admin/user/new/:id" className="create-product-btn">
+     <FaPlus />
+   </Link>
     </div>
      
   );
