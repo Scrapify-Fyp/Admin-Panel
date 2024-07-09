@@ -1,20 +1,4 @@
-{
-    "categories": [
-      {
-        "value": 40,
-        "heading": "Users"
-      },
-  
-      {
-        "value": 100,
-        "heading": "Products"
-      },
-      {
-        "value": 80,
-        "heading": "Orders"
-      }
-    ],
-  
+{ 
     "transaction": [
       {
         "id": "ksdnfkjsdfx",

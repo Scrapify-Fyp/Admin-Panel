@@ -145,10 +145,7 @@ function Customers() {
           loading
         )}
       </main>
-      <Link to="" className="create-product-btn">
-     <FaPlus />
-   </Link>
-      <Link to="/admin/user/new/:id" className="create-product-btn">
+      <Link to="/admin/AddNewUser" className="create-product-btn">
      <FaPlus />
    </Link>
     </div>

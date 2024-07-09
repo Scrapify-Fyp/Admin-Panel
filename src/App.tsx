@@ -89,7 +89,7 @@ function App() {
             </Protectedroute>
           }
           />
-           <Route path="/admin/user/new/:id" element={
+           <Route path="/admin/AddNewUser" element={
             <Protectedroute>
               <NewUser />
             </Protectedroute>
