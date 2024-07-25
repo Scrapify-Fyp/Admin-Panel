@@ -56,7 +56,10 @@ function Customers() {
 
   useEffect(() => {
     axios.get('http://localhost:3002/users')
+    
       .then(response => {
+            console.log(response.data);
+
         const users = response.data.map((user: any, index: any) => ({
           avatar: (
             <img
@@ -106,7 +109,7 @@ function Customers() {
         }));
         setData(users);
         setLoading(false);
-      })
+        })
       .catch(error => {
         console.error('Error fetching users:', error);
         setLoading(false);

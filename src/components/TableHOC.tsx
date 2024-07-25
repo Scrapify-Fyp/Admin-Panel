@@ -8,15 +8,16 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import Spinner from 'react-bootstrap/Spinner';
+import SpinnerComponent from "../components/SpinnerComonent"
+// import Spinner from 'react-bootstrap/Spinner';
 
-const SpinnerComponent = () => (
-  <div style={{display:"flex",justifyContent:"center",marginTop:"200px"}}>
-    <Spinner animation="border" role="status">
-      <span className="sr-only"></span>
-    </Spinner>
-  </div>
-);
+// const SpinnerComponent = () => (
+//   <div style={{display:"flex",justifyContent:"center",marginTop:"200px"}}>
+//     <Spinner animation="border" role="status">
+//       <span className="sr-only"></span>
+//     </Spinner>
+//   </div>
+// );
 function TableHOC<T>(
   columns: ColumnDef<T, any>[],
   InputData: T[],

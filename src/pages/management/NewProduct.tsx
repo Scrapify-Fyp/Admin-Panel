@@ -307,21 +307,22 @@ const NewProduct: React.FC = () => {
               type="file"
               onChange={handleFileChange}
             />
+            OR
             <input
               type="text"
               placeholder="Add Image URL"
               value={newImageURL}
               onChange={(e) => setNewImageURL(e.target.value)}
             />
-            <button type="button" onClick={handleAddImageURL}>Add URL</button>
-            <ul>
+            <button style={{height:"35px"}} className="btn btn-primary" type="button" onClick={handleAddImageURL}>Add Image</button>
+            <div style={{display:"flex",flexWrap:"wrap",width:"700px"}} className="image-url-list">
               {formData.imageURL.map((url, index) => (
-                <li key={index}>
-                  <img src={url} alt={`Product ${index}`} style={{ width: "50px", height: "50px" }} />
-                  <button type="button" onClick={() => handleRemoveImageURL(index)}>Remove</button>
-                </li>
+                <div key={index}  className="image-url-item">
+                  <img style={{width:"200px",height:"200px", padding:"30px"}} src={url} alt={`Image ${index + 1}`} />
+                  <button className="btn btn-danger" type="button" onClick={() => handleRemoveImageURL(index)}>Remove</button>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         </div>
         <div className="row">
@@ -332,7 +333,7 @@ const NewProduct: React.FC = () => {
             <TagInput tags={tags} onChange={handleTagChange} />
           </div>
         </div>
-        <button type="submit">Update Product</button>
+        <button type="submit">Upload Product</button>
       </form>
     </div>
   );

@@ -74,28 +74,12 @@ const ManageProduct: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    try {
-      // Handle file upload separately if a new file is selected
-      if (newImageFile) {
-        const formDataWithImage = new FormData();
-        formDataWithImage.append('image', newImageFile);
-        const uploadResponse = await axios.post('http://localhost:3002/upload', formDataWithImage, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        });
-        const imagePath = uploadResponse.data.path;
-        formData.imageURL.push(imagePath); // Update imageURL with the new image path
-      }
-
-      // Update product information
       await axios.patch(`http://localhost:3002/products/${id}`, formData);
       console.log("Product updated successfully");
       navigate("/admin/product");
-    } catch (error) {
-      console.error("Error updating product:", error);
-    }
+    // } catch (error) {
+    //   console.error("Error updating product:", error);
+    // }
   };
 
   const handleClick = () => {
@@ -106,6 +90,12 @@ const ManageProduct: React.FC = () => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
       setNewImageFile(file);
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData({ ...formData, imageURL: [...formData.imageURL, reader.result as string] });
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -320,12 +310,6 @@ const ManageProduct: React.FC = () => {
             />
             OR
             <div className="image-url-list">
-              {/* {formData.imageURL.map((url, index) => (
-                <div key={index} className="image-url-item">
-                  <img style={{width:"200px",height:"200px", padding:"30px"}} src={url} alt={`Image ${index + 1}`} />
-                  <button type="button" onClick={() => handleRemoveImageURL(index)}>Remove</button>
-                </div>
-              ))} */}
                <input
               type="text"
               value={newImageURL}
