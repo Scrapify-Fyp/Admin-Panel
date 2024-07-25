@@ -16,6 +16,7 @@ const NewProduct = lazy(() => import('./pages/management/NewProduct'));
 const ProductManagement = lazy(() => import('./pages/management/ProductManagement'));
 const TransactionManagement = lazy(() => import('./pages/management/TransactionManagement'));
 const CustomerManagement = lazy(() => import('./pages/management/CustomerManagement'));
+const NewUser = lazy(() => import('./pages/management/NewUser'));
 
 function App() {
   const dispatch = useDispatch();
@@ -88,6 +89,11 @@ function App() {
             </Protectedroute>
           }
           />
+           <Route path="/admin/AddNewUser" element={
+            <Protectedroute>
+              <NewUser />
+            </Protectedroute>
+          } />
         </Routes>
       </Suspense>
     </Router>

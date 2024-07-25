@@ -72,7 +72,23 @@ function Dashboard() {
     setDropdownOpen(!dropdownOpen); 
   };
 
-
+  const countdata={
+    "categories": [
+      {
+        "value": usersCount,
+        "heading": "Users"
+      },
+  
+      {
+        "value": productsCount,
+        "heading": "Products"
+      },
+      {
+        "value": 80,
+        "heading": "Orders"
+      }
+    ]
+  };
     return (
     <div className="admin-container">
       <AdminSidebar />
@@ -153,7 +169,7 @@ function Dashboard() {
           <div className="dashboard-categories">
             <h2>View All</h2>
             <div>
-              {data.categories.map((i) => (
+              {countdata.categories.map((i) => (
                 <CategoryItem
                   key={i.heading}
                   heading={i.heading}
