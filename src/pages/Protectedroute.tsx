@@ -2,6 +2,7 @@ import React, { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "./auth";
 
+
 interface ProtectedRouteProps {
   children: ReactNode;
 }
@@ -13,7 +14,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
   if (!user) {
     
-    return <Navigate to="/" replace />;
+    return <Navigate to="/login" replace />;
   } else {
     return <>{children}</>;
   }
