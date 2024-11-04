@@ -6,7 +6,7 @@ import AdminSidebar from "../components/AdminSidebar";
 import { BsSearch } from "react-icons/bs";
 import { FaRegBell } from "react-icons/fa";
 import { HiTrendingUp, HiTrendingDown } from "react-icons/hi";
-import data from "../assets/data.json";
+// import data from "../assets/data.json";
 import { BarChart } from "../components/Charts";
 import { defaultData } from "../assets/rootData";
 import DashboardTable from "../components/DashboardTable";
@@ -45,7 +45,7 @@ function Dashboard() {
     useEffect(() => {
     const fetchData = () => {
       axios
-        .get(`http://localhost:3002/products/count`)
+        .get(`${import.meta.env.VITE_API_BASE_URL}/products/count`)
         .then((res) => {
           setProductsCount(res.data.count);
           setrendumnumbersproduct(false);
@@ -55,7 +55,7 @@ function Dashboard() {
         });
   
       axios
-        .get(`http://localhost:3002/users/count`)
+        .get(`${import.meta.env.VITE_API_BASE_URL}/users/count`)
         .then((res) => {
           setUsersCount(res.data.count);
           setrendumnumbersuser(false);

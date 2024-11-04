@@ -53,7 +53,7 @@ const NewUser: React.FC = () => {
     e.preventDefault();
     try {
       console.log('Form Data:', formData); // Log formData before sending
-      const response = await axios.post('http://localhost:3002/users', formData);
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/users`, formData);
       console.log('User added successfully:', response.data);
       navigate('/admin/customer');
     } catch (error) {

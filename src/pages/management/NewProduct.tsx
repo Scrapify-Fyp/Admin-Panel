@@ -69,7 +69,7 @@ const NewProduct: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:3002/products`, formData);
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/products`, formData);
       console.log("Product updated successfully");
       navigate(`/admin/customer/${id}`);
     } catch (error) {

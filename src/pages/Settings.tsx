@@ -25,7 +25,7 @@ const SettingsPage = () => {
     }
 
     try {
-      const response = await axios.patch(`http://localhost:3002/admins/update-password`, {
+      const response = await axios.patch(`${import.meta.env.VITE_API_BASE_URL}/admins/update-password`, {
         adminId: admin.id, 
         oldPassword,
         newPassword

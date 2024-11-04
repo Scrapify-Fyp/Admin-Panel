@@ -33,12 +33,12 @@ const App = () => {
 
   useEffect(() => {
     // Fetch user profile
-    axios.get(`http://localhost:3002/users/${id}`)
+    axios.get(`${import.meta.env.VITE_API_BASE_URL}/users/${id}`)
       .then(response => setUserProfile(response.data))
       .catch(error => console.error("Error fetching user profile:", error));
 
     // Fetch user products
-    axios.get(`http://localhost:3002/users/${id}/products`)
+    axios.get(`${import.meta.env.VITE_API_BASE_URL}/users/${id}/products`)
       .then(response => setProducts(response.data.products))
       .catch(error => console.error("Error fetching products:", error));
   }, [id]);
@@ -55,7 +55,7 @@ const App = () => {
   };
 
   const handleSaveChanges = () => {
-    axios.patch(`http://localhost:3002/users/${id}`, userProfile)
+    axios.patch(`${import.meta.env.VITE_API_BASE_URL}/users/${id}`, userProfile)
       .then(response => {
         setUserProfile(response.data);
         alert("User profile updated successfully");
@@ -65,7 +65,7 @@ const App = () => {
   };
 
   const handleDeleteProduct = (productId: string) => {
-    axios.delete(`http://localhost:3002/products/${productId}`)
+    axios.delete(`${import.meta.env.VITE_API_BASE_URL}/products/${productId}`)
       .then(() => {
         setProducts(products.filter(product => product._id !== productId));
         alert("Product deleted successfully");

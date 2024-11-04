@@ -56,7 +56,7 @@ function Transaction() {
   useEffect(() => {
     const fetchPayments = async () => {
       try {
-        const response = await axios.get('http://localhost:3002/payments');
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/payments`);
         const payments = response.data;
 
         const formattedData = payments.data.map((payment: any) => ({

@@ -20,7 +20,7 @@ function LoginPage() {
     setTimeout(async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3002/Adminlogin",
+        `${import.meta.env.VITE_API_BASE_URL}/Adminlogin`,
         {
           username,
           password,

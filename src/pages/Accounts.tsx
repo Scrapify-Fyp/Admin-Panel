@@ -37,7 +37,7 @@ const AccountsPage: React.FC = () => {
       if (!admin) return;
 
       try {
-        const response = await axios.get(`http://localhost:3002/admins/${admin.id}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/admins/${admin.id}`);
         const adminData: Admin = response.data;
         // console.log(adminData);
         setFormData(adminData);
@@ -50,7 +50,7 @@ const AccountsPage: React.FC = () => {
   }, []);
   const handleSave = async () => {
     try {
-      await axios.patch(`http://localhost:3002/admins/${admin.id}`, formData);
+      await axios.patch(`${import.meta.env.VITE_API_BASE_URL}/admins/${admin.id}`, formData);
       alert('Profile updated successfully');
     } catch (error) {
       console.error('Error updating profile:', error);

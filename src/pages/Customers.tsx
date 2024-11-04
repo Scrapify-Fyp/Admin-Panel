@@ -55,7 +55,7 @@ function Customers() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://localhost:3002/users')
+    axios.get(`${import.meta.env.VITE_API_BASE_URL}/users`)
     
       .then(response => {
             console.log(response.data);
@@ -122,7 +122,7 @@ function Customers() {
       return;
     }
 
-    axios.delete(`http://localhost:3002/users/${userId}`)
+    axios.delete(`${import.meta.env.VITE_API_BASE_URL}/users/${userId}`)
       .then(() => {
         setData(prevData => {
           const newData = [...prevData];

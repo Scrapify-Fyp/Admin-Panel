@@ -55,7 +55,7 @@ const Products = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://localhost:3002/products')
+    axios.get(`${import.meta.env.VITE_API_BASE_URL}/products`)
       .then(response => {
         const products = response.data.map((product: any, index: number) => ({
           photo: <img src={product.imageURL[0]} alt={product.name} />,
@@ -93,7 +93,7 @@ const Products = () => {
       return;
     }
     
-    axios.delete(`http://localhost:3002/products/${productId}`)
+    axios.delete(`${import.meta.env.VITE_API_BASE_URL}/products/${productId}`)
     .then(() => {
               setData(prevData => {
                 const newData = [...prevData];
